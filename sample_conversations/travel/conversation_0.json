@@ -1,0 +1,328 @@
+    {
+    "trajectories": {
+        "travel_agent": [
+            {
+                "role": "User",
+                "source": "User",
+                "destination": "travel_agent",
+                "content": "I am going on a bicycle tour tomorrow. I want to know the distance from my home to the destination of my bicycle tour, as well as the weather forecast for tomorrow at my destination.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "User",
+                "content": "I'd be happy to help you with information about your bicycle tour. To provide accurate details, I need some more information:\n\n1. What is your home location (city and state or country)?\n2. What is the destination of your bicycle tour (city and state or country)?\n3. What date is \"tomorrow\" for you (please provide the specific date)?\n\nOnce you provide this information, I'll be able to help you with the distance and weather forecast for your tour.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": "User",
+                "source": "User",
+                "destination": "travel_agent",
+                "content": "My home address is 770 E 6th St, Beaumont, CA 92223. The destination of my bicycle tour is Idyllwild, CA. Tomorrow's date is October 19, 2024. I would also like to know some recommendations for Italian restaurants near my destination in Idyllwild.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "location_search_agent",
+                "content": "Please provide the distance between 770 E 6th St, Beaumont, CA 92223 and Idyllwild, CA.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "weather_agent",
+                "content": "Please provide the weather forecast for Idyllwild, CA on October 19, 2024.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "weather_agent",
+                "destination": "travel_agent",
+                "content": "What country is Idyllwild located in?",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "restaurant_agent",
+                "content": "Please recommend Italian restaurants in Idyllwild, CA.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "restaurant_agent",
+                "destination": "travel_agent",
+                "content": "Here are my recommendations for Italian restaurants in Idyllwild, CA:\n\n1. Trattoria Toscana - This highly rated Tuscan/Mediterranean restaurant has an aggregate rating of 4.6/5 from 487 reviews. It is moderately priced and offers reservations and outdoor seating.\n\n2. Ristorante Amore - An upscale Italian/Seafood restaurant rated 4.5/5 from 198 reviews. It is on the expensive side but offers reservations, outdoor seating, and is good for groups.\n\n3. La Dolce Vita - A moderately priced Italian restaurant with a wine bar. It has a 4.3/5 rating from 314 reviews and offers reservations and outdoor seating.\n\n4. Piccolo Paradiso - A moderately priced Italian pizza place rated 4.2/5 from 312 reviews. It is kid-friendly.\n\n5. Cucina Casalinga - A cheap, homestyle Italian restaurant with a 4.1/5 rating from 76 reviews. It is the most affordable option on the list.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "location_search_agent",
+                "destination": "travel_agent",
+                "content": "The distance between 770 E 6th St, Beaumont, CA 92223 and Idyllwild, CA is 33.1 miles.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "weather_agent",
+                "content": "Idyllwild is located in California, United States. Please provide the weather forecast for Idyllwild, CA, USA on October 19, 2024.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "weather_agent",
+                "destination": "travel_agent",
+                "content": "The weather forecast for Idyllwild, CA on October 19, 2024 is:\n\nSunny with clear skies. High temperature of 26.7\u00b0C (80.1\u00b0F) and a low of 18.3\u00b0C (64.9\u00b0F). Average temperature of 22.5\u00b0C (72.5\u00b0F). Humidity of 45%.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "User",
+                "content": "Thank you for your patience. I have gathered all the information you requested about your bicycle tour tomorrow. Here's a summary:\n\n1. Distance: The distance from your home (770 E 6th St, Beaumont, CA 92223) to your destination (Idyllwild, CA) is 33.1 miles.\n\n2. Weather Forecast for Idyllwild, CA on October 19, 2024:\n   - Sunny with clear skies\n   - High temperature: 26.7\u00b0C (80.1\u00b0F)\n   - Low temperature: 18.3\u00b0C (64.9\u00b0F)\n   - Average temperature: 22.5\u00b0C (72.5\u00b0F)\n   - Humidity: 45%\n\n3. Italian Restaurant Recommendations in Idyllwild, CA:\n   a) Trattoria Toscana: Tuscan/Mediterranean, 4.6/5 rating, moderately priced\n   b) Ristorante Amore: Italian/Seafood, 4.5/5 rating, upscale\n   c) La Dolce Vita: Italian with wine bar, 4.3/5 rating, moderately priced\n   d) Piccolo Paradiso: Italian pizza, 4.2/5 rating, moderately priced, kid-friendly\n   e) Cucina Casalinga: Homestyle Italian, 4.1/5 rating, affordable\n\nThe weather looks great for your bicycle tour, with sunny skies and comfortable temperatures. Make sure to stay hydrated during your ride, especially since the humidity is relatively low at 45%. \n\nFor your post-ride meal, you have several Italian restaurant options to choose from, ranging from affordable to upscale. Trattoria Toscana seems to be the highest-rated option if you're looking for a moderately priced meal.\n\nEnjoy your bicycle tour and have a great time in Idyllwild!",
+                "actions": null,
+                "observation": null}
+        ],
+        "weather_agent": [
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "weather_agent",
+                "content": "Please provide the weather forecast for Idyllwild, CA on October 19, 2024.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "weather_agent",
+                "destination": "travel_agent",
+                "content": "What country is Idyllwild located in?",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "weather_agent",
+                "content": "Idyllwild is located in California, United States. Please provide the weather forecast for Idyllwild, CA, USA on October 19, 2024.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": "Action",
+                "source": "weather_agent",
+                "destination": "weather_agent",
+                "content": "<thinking>\nGot it, Idyllwild is located in the United States. I now have the city, country, and date to get the weather forecast using the `get::weather::gettomorrowweatherbycity` function.\n</thinking>\n\n<function_calls>\n    <invoke>\n        <tool_name>get::weather::gettomorrowweatherbycity</tool_name>\n        <parameters>\n        <city>Idyllwild</city>\n        <country>United States</country>\n        </parameters>\n    </invoke>\n</function_calls>",
+                "actions": [
+                    {
+                        "tool_name": "get::weather::gettomorrowweatherbycity",
+                        "action_name": null,
+                        "parameters": {
+                            "mock_fn_input": {
+                                "tool_name": "get::weather::gettomorrowweatherbycity",
+                                "tool_parameters": {
+                                    "city": "Idyllwild",
+                                    "country": "United States"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "observation": null},
+            {
+                "role": "Observation",
+                "source": "weather_agent",
+                "destination": "weather_agent",
+                "content": "<function_results>\n<result>\n<tool_name>get::weather::gettomorrowweatherbycity</tool_name>\n<stdout>{\n  \"status\": 200,\n  \"message\": \"Success\",\n  \"data\": {\n    \"weather\": {\n      \"main\": \"Sunny\",\n      \"description\": \"Clear sky\"\n    },\n    \"temperature\": {\n      \"temp\": 22.5,\n      \"temp_min\": 18.3,\n      \"temp_max\": 26.7,\n      \"humidity\": 45\n    }\n  }\n}</stdout>\n</result>\n</function_results>",
+                "actions": null,
+                "observation": "{\n  \"status\": 200,\n  \"message\": \"Success\",\n  \"data\": {\n    \"weather\": {\n      \"main\": \"Sunny\",\n      \"description\": \"Clear sky\"\n    },\n    \"temperature\": {\n      \"temp\": 22.5,\n      \"temp_min\": 18.3,\n      \"temp_max\": 26.7,\n      \"humidity\": 45\n    }\n  }\n}"},
+            {
+                "role": null,
+                "source": "weather_agent",
+                "destination": "travel_agent",
+                "content": "The weather forecast for Idyllwild, CA on October 19, 2024 is:\n\nSunny with clear skies. High temperature of 26.7\u00b0C (80.1\u00b0F) and a low of 18.3\u00b0C (64.9\u00b0F). Average temperature of 22.5\u00b0C (72.5\u00b0F). Humidity of 45%.",
+                "actions": null,
+                "observation": null}
+        ],
+        "location_search_agent": [
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "location_search_agent",
+                "content": "Please provide the distance between 770 E 6th St, Beaumont, CA 92223 and Idyllwild, CA.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": "Action",
+                "source": "location_search_agent",
+                "destination": "location_search_agent",
+                "content": "<thinking>\nOkay, let me calculate the distance between those two locations for you.\n\nTo calculate the distance, I first need to get the coordinates for the origin and destination locations. I will use the searchbytext function to get the coordinates for \"770 E 6th St, Beaumont, CA 92223\" and \"Idyllwild, CA\".\n</thinking>\n\n<function_calls>\n<invoke>\n<tool_name>post::locationservice::searchbytext</tool_name>\n<parameters>\n<text>770 E 6th St, Beaumont, CA 92223</text>\n</parameters>\n</invoke>\n</function_calls>",
+                "actions": [
+                    {
+                        "tool_name": "post::locationservice::searchbytext",
+                        "action_name": null,
+                        "parameters": {
+                            "mock_fn_input": {
+                                "tool_name": "post::locationservice::searchbytext",
+                                "tool_parameters": {
+                                    "text": "770 E 6th St, Beaumont, CA 92223"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "observation": null},
+            {
+                "role": "Observation",
+                "source": "location_search_agent",
+                "destination": "location_search_agent",
+                "content": "<function_results>\n<result>\n<tool_name>post::locationservice::searchbytext</tool_name>\n<stdout>{\n  \"places\": [\n    {\n      \"label\": \"770 E 6th St, Beaumont, CA 92223, USA\",\n      \"categories\": [\n        \"address\"\n      ],\n      \"street_number\": \"770\",\n      \"street\": \"E 6th St\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9367,\n        -116.9774\n      ],\n      \"hours\": \"N/A\"\n    },\n    {\n      \"label\": \"Beaumont City Hall\",\n      \"categories\": [\n        \"government\",\n        \"municipal\"\n      ],\n      \"street_number\": \"550\",\n      \"street\": \"E 6th St\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9368,\n        -116.9768\n      ],\n      \"hours\": \"Mon-Thu 7:30am-5:30pm, Fri 8am-5pm\"\n    },\n    {\n      \"label\": \"Beaumont Library\",\n      \"categories\": [\n        \"library\"\n      ],\n      \"street_number\": \"125\",\n      \"street\": \"E 8th St\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9325,\n        -116.9761\n      ],\n      \"hours\": \"Mon-Thu 10am-8pm, Fri-Sat 10am-6pm, Sun 1pm-5pm\"\n    },\n    {\n      \"label\": \"Beaumont Civic Center\",\n      \"categories\": [\n        \"community_center\"\n      ],\n      \"street_number\": \"550\",\n      \"street\": \"E 6th St\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9368,\n        -116.9768\n      ],\n      \"hours\": \"Hours vary by event\"\n    },\n    {\n      \"label\": \"Beaumont Police Department\",\n      \"categories\": [\n        \"police\"\n      ],\n      \"street_number\": \"660\",\n      \"street\": \"Orange Ave\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9321,\n        -116.9774\n      ],\n      \"hours\": \"Open 24 hours\"\n    }\n  ]\n}</stdout>\n</result>\n</function_results>",
+                "actions": null,
+                "observation": "{\n  \"places\": [\n    {\n      \"label\": \"770 E 6th St, Beaumont, CA 92223, USA\",\n      \"categories\": [\n        \"address\"\n      ],\n      \"street_number\": \"770\",\n      \"street\": \"E 6th St\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9367,\n        -116.9774\n      ],\n      \"hours\": \"N/A\"\n    },\n    {\n      \"label\": \"Beaumont City Hall\",\n      \"categories\": [\n        \"government\",\n        \"municipal\"\n      ],\n      \"street_number\": \"550\",\n      \"street\": \"E 6th St\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9368,\n        -116.9768\n      ],\n      \"hours\": \"Mon-Thu 7:30am-5:30pm, Fri 8am-5pm\"\n    },\n    {\n      \"label\": \"Beaumont Library\",\n      \"categories\": [\n        \"library\"\n      ],\n      \"street_number\": \"125\",\n      \"street\": \"E 8th St\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9325,\n        -116.9761\n      ],\n      \"hours\": \"Mon-Thu 10am-8pm, Fri-Sat 10am-6pm, Sun 1pm-5pm\"\n    },\n    {\n      \"label\": \"Beaumont Civic Center\",\n      \"categories\": [\n        \"community_center\"\n      ],\n      \"street_number\": \"550\",\n      \"street\": \"E 6th St\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9368,\n        -116.9768\n      ],\n      \"hours\": \"Hours vary by event\"\n    },\n    {\n      \"label\": \"Beaumont Police Department\",\n      \"categories\": [\n        \"police\"\n      ],\n      \"street_number\": \"660\",\n      \"street\": \"Orange Ave\",\n      \"city\": \"Beaumont\",\n      \"region\": \"California\",\n      \"postal_code\": \"92223\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.9321,\n        -116.9774\n      ],\n      \"hours\": \"Open 24 hours\"\n    }\n  ]\n}"},
+            {
+                "role": "Action",
+                "source": "location_search_agent",
+                "destination": "location_search_agent",
+                "content": "<thinking>\nThe searchbytext function returned the coordinates for 770 E 6th St, Beaumont, CA 92223 as [33.9367, -116.9774].\n\nNow I need to get the coordinates for Idyllwild, CA using the same function.\n</thinking>\n\n<function_calls>\n<invoke>\n<tool_name>post::locationservice::searchbytext</tool_name>\n<parameters>\n<text>Idyllwild, CA</text>\n</parameters>\n</invoke>\n</function_calls>",
+                "actions": [
+                    {
+                        "tool_name": "post::locationservice::searchbytext",
+                        "action_name": null,
+                        "parameters": {
+                            "mock_fn_input": {
+                                "tool_name": "post::locationservice::searchbytext",
+                                "tool_parameters": {
+                                    "text": "Idyllwild, CA"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "observation": null},
+            {
+                "role": "Observation",
+                "source": "location_search_agent",
+                "destination": "location_search_agent",
+                "content": "<function_results>\n<result>\n<tool_name>post::locationservice::searchbytext</tool_name>\n<stdout>{\n  \"places\": [\n    {\n      \"label\": \"Idyllwild, CA, USA\",\n      \"categories\": [\n        \"Town\",\n        \"Village\"\n      ],\n      \"street_number\": \"\",\n      \"street\": \"\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\",\n      \"postal_code\": \"92549\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7439,\n        -116.7139\n      ],\n      \"hours\": \"\"\n    },\n    {\n      \"label\": \"Idyllwild Park\",\n      \"categories\": [\n        \"Park\"\n      ],\n      \"street_number\": \"\",\n      \"street\": \"Idyllwild Park Road\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\",\n      \"postal_code\": \"92549\",\n      \"country\": \"United States\", \n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7481,\n        -116.7163\n      ],\n      \"hours\": \"\"\n    },\n    {\n      \"label\": \"Idyllwild Nature Center\",\n      \"categories\": [\n        \"Nature Center\"\n      ],\n      \"street_number\": \"25225\",\n      \"street\": \"Highway 243\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\",\n      \"postal_code\": \"92549\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7524,\n        -116.7197\n      ],\n      \"hours\": \"Wed-Sun: 9AM\u20134PM\"\n    },\n    {\n      \"label\": \"Idyllwild Arts Academy\",\n      \"categories\": [\n        \"School\",\n        \"Arts School\"  \n      ],\n      \"street_number\": \"52500\",\n      \"street\": \"Temecula Road\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\", \n      \"postal_code\": \"92549\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7367,\n        -116.7289\n      ],\n      \"hours\": \"\"\n    },\n    {\n      \"label\": \"Idyllwild Brewpub\",\n      \"categories\": [\n        \"Brewery\",\n        \"Pub\"\n      ],\n      \"street_number\": \"54423\",\n      \"street\": \"Village Center Drive\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\",\n      \"postal_code\": \"92549\", \n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7441,\n        -116.7135\n      ],\n      \"hours\": \"Mon-Thu: 11:30AM-9PM, Fri-Sat: 11:30AM-10PM, Sun: 11:30AM-9PM\"\n    }\n  ]\n}</stdout>\n</result>\n</function_results>",
+                "actions": null,
+                "observation": "{\n  \"places\": [\n    {\n      \"label\": \"Idyllwild, CA, USA\",\n      \"categories\": [\n        \"Town\",\n        \"Village\"\n      ],\n      \"street_number\": \"\",\n      \"street\": \"\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\",\n      \"postal_code\": \"92549\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7439,\n        -116.7139\n      ],\n      \"hours\": \"\"\n    },\n    {\n      \"label\": \"Idyllwild Park\",\n      \"categories\": [\n        \"Park\"\n      ],\n      \"street_number\": \"\",\n      \"street\": \"Idyllwild Park Road\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\",\n      \"postal_code\": \"92549\",\n      \"country\": \"United States\", \n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7481,\n        -116.7163\n      ],\n      \"hours\": \"\"\n    },\n    {\n      \"label\": \"Idyllwild Nature Center\",\n      \"categories\": [\n        \"Nature Center\"\n      ],\n      \"street_number\": \"25225\",\n      \"street\": \"Highway 243\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\",\n      \"postal_code\": \"92549\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7524,\n        -116.7197\n      ],\n      \"hours\": \"Wed-Sun: 9AM\u20134PM\"\n    },\n    {\n      \"label\": \"Idyllwild Arts Academy\",\n      \"categories\": [\n        \"School\",\n        \"Arts School\"  \n      ],\n      \"street_number\": \"52500\",\n      \"street\": \"Temecula Road\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\", \n      \"postal_code\": \"92549\",\n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7367,\n        -116.7289\n      ],\n      \"hours\": \"\"\n    },\n    {\n      \"label\": \"Idyllwild Brewpub\",\n      \"categories\": [\n        \"Brewery\",\n        \"Pub\"\n      ],\n      \"street_number\": \"54423\",\n      \"street\": \"Village Center Drive\",\n      \"city\": \"Idyllwild\",\n      \"region\": \"California\",\n      \"postal_code\": \"92549\", \n      \"country\": \"United States\",\n      \"timezone\": \"America/Los_Angeles\",\n      \"coordinates\": [\n        33.7441,\n        -116.7135\n      ],\n      \"hours\": \"Mon-Thu: 11:30AM-9PM, Fri-Sat: 11:30AM-10PM, Sun: 11:30AM-9PM\"\n    }\n  ]\n}"},
+            {
+                "role": "Action",
+                "source": "location_search_agent",
+                "destination": "location_search_agent",
+                "content": "<thinking>\nThe searchbytext function returned the coordinates for Idyllwild, CA as [33.7439, -116.7139].\n\nNow that I have the origin and destination coordinates, I can use the calculatedistance function to get the distance between the two locations.\n</thinking>\n\n<function_calls>\n<invoke>\n<tool_name>post::locationservice::calculatedistance</tool_name>\n<parameters>\n<origin>33.9367,-116.9774</origin>\n<destination>33.7439,-116.7139</destination>\n<travel_mode>Car</travel_mode>\n<distance_unit>Miles</distance_unit>\n</parameters>\n</invoke>\n</function_calls>",
+                "actions": [
+                    {
+                        "tool_name": "post::locationservice::calculatedistance",
+                        "action_name": null,
+                        "parameters": {
+                            "mock_fn_input": {
+                                "tool_name": "post::locationservice::calculatedistance",
+                                "tool_parameters": {
+                                    "origin": "33.9367,-116.9774",
+                                    "destination": "33.7439,-116.7139",
+                                    "travel_mode": "Car",
+                                    "distance_unit": "Miles"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "observation": null},
+            {
+                "role": "Observation",
+                "source": "location_search_agent",
+                "destination": "location_search_agent",
+                "content": "<function_results>\n<result>\n<tool_name>post::locationservice::calculatedistance</tool_name>\n<stdout>{\n  \"summary\": {\n    \"distance\": 33.1,\n    \"distance_unit\": \"Miles\",\n    \"duration_minutes\": 41\n  }\n}</stdout>\n</result>\n</function_results>",
+                "actions": null,
+                "observation": "{\n  \"summary\": {\n    \"distance\": 33.1,\n    \"distance_unit\": \"Miles\",\n    \"duration_minutes\": 41\n  }\n}"},
+            {
+                "role": null,
+                "source": "location_search_agent",
+                "destination": "travel_agent",
+                "content": "The distance between 770 E 6th St, Beaumont, CA 92223 and Idyllwild, CA is 33.1 miles.",
+                "actions": null,
+                "observation": null}
+        ],
+        "car_rental_agent": [],
+        "flight_agent": [],
+        "hotel_agent": [],
+        "travel_budget_agent": [],
+        "restaurant_agent": [
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "restaurant_agent",
+                "content": "Please recommend Italian restaurants in Idyllwild, CA.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": "Action",
+                "source": "restaurant_agent",
+                "destination": "restaurant_agent",
+                "content": "<thinking>\nOkay, let me search for Italian restaurants in Idyllwild, CA.\n\nTo search for Italian restaurants in Idyllwild, I will use the post::restaurantsearch::searchrestaurants function with the location \"Idyllwild, CA\" and query \"Italian\".\n</thinking>\n\n<function_calls>\n    <invoke>\n        <tool_name>post::restaurantsearch::searchrestaurants</tool_name>\n        <parameters>\n        <location>Idyllwild, CA</location>\n        <query>Italian</query>\n        </parameters>\n    </invoke>\n</function_calls>",
+                "actions": [
+                    {
+                        "tool_name": "post::restaurantsearch::searchrestaurants",
+                        "action_name": null,
+                        "parameters": {
+                            "mock_fn_input": {
+                                "tool_name": "post::restaurantsearch::searchrestaurants",
+                                "tool_parameters": {
+                                    "location": "Idyllwild, CA",
+                                    "query": "Italian"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "observation": null},
+            {
+                "role": "Observation",
+                "source": "restaurant_agent",
+                "destination": "restaurant_agent",
+                "content": "<function_results>\n<result>\n<tool_name>post::restaurantsearch::searchrestaurants</tool_name>\n<stdout>{\n  \"results\": [\n    {\n      \"name\": \"Trattoria Toscana\",\n      \"id\": \"b7f9b8f0-9a3c-4d2a-b3c6-8f7e2f3d832a\",\n      \"ratings\": 487,\n      \"aggregate_rating\": 4.6,\n      \"categories\": [\n        \"Italian\",\n        \"Tuscan\",\n        \"Mediterranean\"\n      ],\n      \"features\": [\n        \"takes_reservations\",\n        \"has_outdoor_eating\"\n      ],\n      \"price_range\": \"Moderate\"\n    },\n    {\n      \"name\": \"Piccolo Paradiso\",\n      \"id\": \"c3d9e1b5-a5e0-4d3f-a5c7-e8f6b3f7d72f\",\n      \"ratings\": 312,\n      \"aggregate_rating\": 4.2,\n      \"categories\": [\n        \"Italian\",\n        \"Pizza\"\n      ],\n      \"features\": [\n        \"kid_friendly\"\n      ],\n      \"price_range\": \"Moderate\"\n    },\n    {\n      \"name\": \"Ristorante Amore\",\n      \"id\": \"f9a9d7c3-6f7e-4e1c-9e9d-b1d7b4f0d3c4\",\n      \"ratings\": 198,\n      \"aggregate_rating\": 4.5,\n      \"categories\": [\n        \"Italian\",\n        \"Seafood\"\n      ],\n      \"features\": [\n        \"takes_reservations\",\n        \"has_outdoor_eating\",\n        \"good_for_groups\"\n      ],\n      \"price_range\": \"Expensive\"\n    },\n    {\n      \"name\": \"Cucina Casalinga\",\n      \"id\": \"6e8bc430-c34a-4f9e-a115-d35ddf81517e\",\n      \"ratings\": 76,\n      \"aggregate_rating\": 4.1,\n      \"categories\": [\n        \"Italian\",\n        \"Homestyle\"\n      ],\n      \"features\": [],\n      \"price_range\": \"Cheap\"\n    },\n    {\n      \"name\": \"La Dolce Vita\",\n      \"id\": \"a0d8ca2b-d155-4d8e-9c18-6b7ebe9d8d3b\",\n      \"ratings\": 314,\n      \"aggregate_rating\": 4.3,\n      \"categories\": [\n        \"Italian\",\n        \"Wine Bar\"\n      ],\n      \"features\": [\n        \"takes_reservations\",\n        \"has_outdoor_eating\"\n      ],\n      \"price_range\": \"Moderate\"\n    }\n  ]\n}</stdout>\n</result>\n</function_results>",
+                "actions": null,
+                "observation": "{\n  \"results\": [\n    {\n      \"name\": \"Trattoria Toscana\",\n      \"id\": \"b7f9b8f0-9a3c-4d2a-b3c6-8f7e2f3d832a\",\n      \"ratings\": 487,\n      \"aggregate_rating\": 4.6,\n      \"categories\": [\n        \"Italian\",\n        \"Tuscan\",\n        \"Mediterranean\"\n      ],\n      \"features\": [\n        \"takes_reservations\",\n        \"has_outdoor_eating\"\n      ],\n      \"price_range\": \"Moderate\"\n    },\n    {\n      \"name\": \"Piccolo Paradiso\",\n      \"id\": \"c3d9e1b5-a5e0-4d3f-a5c7-e8f6b3f7d72f\",\n      \"ratings\": 312,\n      \"aggregate_rating\": 4.2,\n      \"categories\": [\n        \"Italian\",\n        \"Pizza\"\n      ],\n      \"features\": [\n        \"kid_friendly\"\n      ],\n      \"price_range\": \"Moderate\"\n    },\n    {\n      \"name\": \"Ristorante Amore\",\n      \"id\": \"f9a9d7c3-6f7e-4e1c-9e9d-b1d7b4f0d3c4\",\n      \"ratings\": 198,\n      \"aggregate_rating\": 4.5,\n      \"categories\": [\n        \"Italian\",\n        \"Seafood\"\n      ],\n      \"features\": [\n        \"takes_reservations\",\n        \"has_outdoor_eating\",\n        \"good_for_groups\"\n      ],\n      \"price_range\": \"Expensive\"\n    },\n    {\n      \"name\": \"Cucina Casalinga\",\n      \"id\": \"6e8bc430-c34a-4f9e-a115-d35ddf81517e\",\n      \"ratings\": 76,\n      \"aggregate_rating\": 4.1,\n      \"categories\": [\n        \"Italian\",\n        \"Homestyle\"\n      ],\n      \"features\": [],\n      \"price_range\": \"Cheap\"\n    },\n    {\n      \"name\": \"La Dolce Vita\",\n      \"id\": \"a0d8ca2b-d155-4d8e-9c18-6b7ebe9d8d3b\",\n      \"ratings\": 314,\n      \"aggregate_rating\": 4.3,\n      \"categories\": [\n        \"Italian\",\n        \"Wine Bar\"\n      ],\n      \"features\": [\n        \"takes_reservations\",\n        \"has_outdoor_eating\"\n      ],\n      \"price_range\": \"Moderate\"\n    }\n  ]\n}"},
+            {
+                "role": null,
+                "source": "restaurant_agent",
+                "destination": "travel_agent",
+                "content": "Here are my recommendations for Italian restaurants in Idyllwild, CA:\n\n1. Trattoria Toscana - This highly rated Tuscan/Mediterranean restaurant has an aggregate rating of 4.6/5 from 487 reviews. It is moderately priced and offers reservations and outdoor seating.\n\n2. Ristorante Amore - An upscale Italian/Seafood restaurant rated 4.5/5 from 198 reviews. It is on the expensive side but offers reservations, outdoor seating, and is good for groups.\n\n3. La Dolce Vita - A moderately priced Italian restaurant with a wine bar. It has a 4.3/5 rating from 314 reviews and offers reservations and outdoor seating.\n\n4. Piccolo Paradiso - A moderately priced Italian pizza place rated 4.2/5 from 312 reviews. It is kid-friendly.\n\n5. Cucina Casalinga - A cheap, homestyle Italian restaurant with a 4.1/5 rating from 76 reviews. It is the most affordable option on the list.",
+                "actions": null,
+                "observation": null}
+        ],
+        "local_expert_agent": [],
+        "airbnb_agent": [],
+        "User": [
+            {
+                "role": null,
+                "source": "User",
+                "destination": "travel_agent",
+                "content": "I am going on a bicycle tour tomorrow. I want to know the distance from my home to the destination of my bicycle tour, as well as the weather forecast for tomorrow at my destination.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "User",
+                "content": "I'd be happy to help you with information about your bicycle tour. To provide accurate details, I need some more information:\n\n1. What is your home location (city and state or country)?\n2. What is the destination of your bicycle tour (city and state or country)?\n3. What date is \"tomorrow\" for you (please provide the specific date)?\n\nOnce you provide this information, I'll be able to help you with the distance and weather forecast for your tour.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": "User",
+                "source": "User",
+                "destination": "travel_agent",
+                "content": "My home address is 770 E 6th St, Beaumont, CA 92223. The destination of my bicycle tour is Idyllwild, CA. Tomorrow's date is October 19, 2024. I would also like to know some recommendations for Italian restaurants near my destination in Idyllwild.",
+                "actions": null,
+                "observation": null},
+            {
+                "role": null,
+                "source": "travel_agent",
+                "destination": "User",
+                "content": "Thank you for your patience. I have gathered all the information you requested about your bicycle tour tomorrow. Here's a summary:\n\n1. Distance: The distance from your home (770 E 6th St, Beaumont, CA 92223) to your destination (Idyllwild, CA) is 33.1 miles.\n\n2. Weather Forecast for Idyllwild, CA on October 19, 2024:\n   - Sunny with clear skies\n   - High temperature: 26.7\u00b0C (80.1\u00b0F)\n   - Low temperature: 18.3\u00b0C (64.9\u00b0F)\n   - Average temperature: 22.5\u00b0C (72.5\u00b0F)\n   - Humidity: 45%\n\n3. Italian Restaurant Recommendations in Idyllwild, CA:\n   a) Trattoria Toscana: Tuscan/Mediterranean, 4.6/5 rating, moderately priced\n   b) Ristorante Amore: Italian/Seafood, 4.5/5 rating, upscale\n   c) La Dolce Vita: Italian with wine bar, 4.3/5 rating, moderately priced\n   d) Piccolo Paradiso: Italian pizza, 4.2/5 rating, moderately priced, kid-friendly\n   e) Cucina Casalinga: Homestyle Italian, 4.1/5 rating, affordable\n\nThe weather looks great for your bicycle tour, with sunny skies and comfortable temperatures. Make sure to stay hydrated during your ride, especially since the humidity is relatively low at 45%. \n\nFor your post-ride meal, you have several Italian restaurant options to choose from, ranging from affordable to upscale. Trattoria Toscana seems to be the highest-rated option if you're looking for a moderately priced meal.\n\nEnjoy your bicycle tour and have a great time in Idyllwild!",
+                "actions": null,
+                "observation": null}
+        ]
+    }
+}

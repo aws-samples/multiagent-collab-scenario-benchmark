@@ -1,0 +1,55 @@
+{
+    "user_gsr": 1.0,
+    "system_gsr": 1.0,
+    "overall_gsr": 1.0,
+    "partial_gsr": 1.0,
+    "scenario_count": 30,
+    "conversation_count": 1,
+    "conversation_evals": [
+        {
+            "trajectory_index": 0,
+            "user_gsr": 1.0,
+            "system_gsr": 1.0,
+            "overall_gsr": 1.0,
+            "partial_gsr": 1.0,
+            "report": [
+                {
+                    "assertion": "User is informed of the distance from their home at 770 E 6th St, Beaumont, CA 92223, to their destination in Idyllwild, CA.",
+                    "answer": "TRUE",
+                    "evidence": "The travel agent informed the user that the distance from their home (770 E 6th St, Beaumont, CA 92223) to their destination (Idyllwild, CA) is 33.1 miles.",
+                    "assertion_type": "user"
+                },
+                {
+                    "assertion": "User is informed about weather forecast for tomorrow, October 19, 2024, at their destination in Idyllwild, CA.",
+                    "answer": "TRUE",
+                    "evidence": "The travel agent provided the user with the weather forecast for Idyllwild, CA on October 19, 2024, including details about sunny skies, temperatures, and humidity.",
+                    "assertion_type": "user"
+                },
+                {
+                    "assertion": "User is informed of Italian restaurants in Idyllwild, CA.",
+                    "answer": "TRUE",
+                    "evidence": "The travel agent provided the user with a list of Italian restaurant recommendations in Idyllwild, CA, including Trattoria Toscana, Ristorante Amore, La Dolce Vita, Piccolo Paradiso, and Cucina Casalinga.",
+                    "assertion_type": "user"
+                },
+                {
+                    "assertion": "calculate_distance is executed to get distance between 770 E 6th St, Beaumont, CA 92223, and Idyllwild, CA.",
+                    "answer": "TRUE",
+                    "evidence": "The tool 'post::locationservice::calculatedistance' was executed with parameters 'origin': '33.9367,-116.9774' and 'destination': '33.7439,-116.7139', which correspond to the coordinates of 770 E 6th St, Beaumont, CA 92223, and Idyllwild, CA, respectively.",
+                    "assertion_type": "system"
+                },
+                {
+                    "assertion": "get_tomorrow_weather_by_location is executed to retrieve weather forecast for tomorrow, October 19, 2024, at their destination in Idyllwild, CA.",
+                    "answer": "TRUE",
+                    "evidence": "The tool 'get::weather::gettomorrowweatherbycity' was executed with parameters 'city': 'Idyllwild' and 'country': 'United States', and the weather forecast for October 19, 2024, was provided.",
+                    "assertion_type": "system"
+                },
+                {
+                    "assertion": "searchrestaurant is executed to find Italian restaurant recommendations in Idyllwild, CA.",
+                    "answer": "TRUE",
+                    "evidence": "The tool 'post::restaurantsearch::searchrestaurants' was executed with parameters 'location': 'Idyllwild, CA' and 'query': 'Italian', resulting in a list of Italian restaurant recommendations.",
+                    "assertion_type": "system"
+                }
+            ]
+        }
+    ]
+}

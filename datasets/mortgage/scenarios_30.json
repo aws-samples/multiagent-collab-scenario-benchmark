@@ -1,0 +1,306 @@
+{
+    "scenarios": [
+        {
+            "scenario": "Goals: - User needs to know the distance from McCarran International Airport (LAS) to the Las Vegas Convention Center.\n - User needs recommendations for a Tex-Mex restaurant near the Las Vegas Convention Center.\n\nBackground: \u2022 User's name is Alexander James Carter.\n \u2022 Alexander's age is 32.\n \u2022 Alexander's profession as a Marketing Manager with expertise in digital marketing and event management.\n \u2022 Alexander's upcoming trip is to attend the renowned Life Is Beautiful Festival, scheduled from March 8 to March 17, 2024. As a seasoned marketing manager, Alexander sees Life Is Beautiful Festival as an opportunity to stay ahead in digital trends and network with industry leaders.",
+            "input_problem": "Could you help me book a ticket for the Life Is Beautiful Festival using my email address (alexander.carter@email.com)?",
+            "assertions": [
+                "user: User is informed that the distance from McCarran International Airport to the Las Vegas Convention Center could not be retrieved because the agent does not have the capability to look up travel information.",
+                "user: User is informed that recommendations for a Tex-Mex restaurant near the Las Vegas Convention Center could not be provided because the agent does not have the capability to look up restaurant information.",
+                "agent: Primary agent immediately rejects the user's request to calculate the distance between McCarran International Airport and the Las Vegas Convention Center, as this is beyond their capabilities.",
+                "agent: Primary agent immediately rejects the user's request for recommendations for a Tex-Mex restaurant near the Las Vegas Convention Center, as this is beyond their capabilities."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 User needs to calculate potential monthly mortgage payments for their new home with home price of $450,000, down payment of $50,000, loan term of 30 years and interest rate of 3.5%.\n \u2022 User needs to estimate the closing costs associated with this home purchase, considering the location in Portland, Oregon.\n\n\nBackground: - User's name is Ginni Carter.\n - Ginni's Age is 32.\n - Ginni is a botanist.\n - Ginni resides in Seattle, Washington.\n - Ginni is enthusiastic about advancing her career and is looking to make a major life change by purchasing a new home in Portland, Oregon. \n",
+            "input_problem": "I\u2019m in the process of buying my first home and need to calculate my potential monthly mortgage payments with the following details: a home price of $450,000, a down payment of $50,000, a loan term of 30 years, and an interest rate of 3.5%.",
+            "assertions": [
+                "user: User is informed of potential monthly mortgage payments for the user's new home with the following details: Home price: $450,000 Down payment: $50,000 Loan term: 30 years Interest rate: 3.5%",
+                "user: User is informed of the closing costs associated with the user's home purchase, considering home price of $450,000, and location in Portland, Oregon.",
+                "agent: post::realestatemanagement::calculateclosingcost is executed to estimate the closing costs based on the property value of $450,000 and the location in Portland, Oregon.",
+                "agent: post::calculator::calculate is executed to determine the potential monthly mortgage payments for the user's new home, which has a home price of $450,000, a down payment of $50,000, a loan term of 30 years, and an interest rate of 3.5%."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to book 1 ticket for the South by Southwest Music Festival.\n - User needs to know the distance from Austin-Bergstrom International Airport (AUS) to the Austin Convention Center.\n\nBackground: - User's name is Emily Grace Thompson.\n - Emily's age is 32.\n - Emily's gender is female.\n - Emily's occupation is Marketing Communications Manager.\n - Emily's residence is in New York City.\n - Emily's upcoming trip is to attend the renowned South by Southwest (SXSW) festival, scheduled from March 8 to March 17, 2024. As a seasoned marketing manager, Sarah sees SXSW as an opportunity to stay ahead in digital trends and network with industry leaders.",
+            "input_problem": "Could you assist me in booking one ticket for South by Southwest Music Festival using my email address (emily.thompson@email.com)?",
+            "assertions": [
+                "user: Conversation indicates that the user's request to book one ticket for the South by Southwest Music Festival cannot be fulfilled, as it is beyond the agent's capabilities.",
+                "user: Conversation indicates that the user's request to calculate the distance from Austin-Bergstrom International Airport (AUS) to the Austin Convention Center cannot be fulfilled, as it is beyond the agent's capabilities.",
+                "agent: Primary agent rejects the user's request to book one ticket for the South by Southwest Music Festival, as it is beyond their capabilities.",
+                "agent: Primary agent rejects the user's request to calculate the distance from Austin-Bergstrom International Airport (AUS) to the Austin Convention Center, as it is beyond their capabilities."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 User needs to know the status of their loan application with application ID LN-2022-0045.\n \u2022 User needs to obtain their credit report with the unique user ID 2896-4512.\n\nBackground: \u2022 User\u2019s name is Jean Garcia. \n \u2022 Jean\u2019s age is 30 years old. \n \u2022 Jean resides at 2055 S. Pacheco St. Building 400, Santa Fe, NM 87505. \n \u2022 Jean works as an electrical engineer.\n \u2022 Jean wants to know the status of her loan application and her current creidt report.",
+            "input_problem": "I want to know the status of my loan application.",
+            "assertions": [
+                "user: User is informed about the status of their loan application.",
+                "user: User is informed about the credit report for their account.",
+                "agent: Primary agent asks for the user's application ID before checking the status of the user's loan application.",
+                "agent: search_credit_report is executed to fetch the user's credit report for their account."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to review their credit report using user ID EJ0322.\n - User needs to search for neighborhood data in Miami using ZIP code 33130 to ensure the area aligns with their lifestyle and long-term plans.\n\nBackground: - User's name is Carl Davis.\n - Carl is 35 years old.\n - Carl is a civil engineer.\n - Carl's current residence is in Fort Lauderdale, Florida.\n - Carl\u2019s user ID is EJ0322.\n - Carl wants to check his credit report and review neighborhood data for the 33130 ZIP code as he looks for a new house for his growing family.",
+            "input_problem": "Hello! Could you help me check my credit report to verify my credit score? ",
+            "assertions": [
+                "user: Conversation includes Carl providing his user ID before receiving his credit report.",
+                "agent: search_credit_reports is trigged to provide the credit report for user ID EJ0322.",
+                "user: Conversation includes Carl's credit report, including his credit score and description.",
+                "agent: primary agent provides the credit report for user ID EJ0322, consistent with Carl's requirement.",
+                "agent: search_neighborhood_data is executed to retrieve the neighborhood data for Miami, Florida (ZIP code: 33130).",
+                "user: Conversation includes neighborhood data for Miami, ZIP code 33130.",
+                "agent: describe_score_ranges is executed to explain the different credit score ranges and their corresponding descriptions or labels."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 User needs to know the closing cost of their purchased property in Huston, Texas, which has an estimated market value of $1,250,000 with a conventional Fixed Rate 30-year mortgage.\n \u2022 User needs to obtain the balance of their savings account with account number 192676464520 to determine if they have enough to cover any upfront payment.\n\nBackground: \u2022 User\u2019s name is Andrew Phillips.\n \u2022 Andrew\u2019s age is 35 years old. \n \u2022 Andrew\u2019s birthday is on January 30, 1989. \n \u2022 Andrew\u2019s residence is at 3324 Louisiana Ave, Saint Louis, MO 63118.\n \u2022 Andrew plans to know the closing cost of their purchase property in Texas.",
+            "input_problem": "I want to know the closing cost of my purchased property in Texas.",
+            "assertions": [
+                "user: User is informed about the closing costs for a $1,250,000 property in Houston, Texas, with a conventional 30-year fixed-rate mortgage.",
+                "user: User is not informed about the balance of their savings account.",
+                "agent: post::realestatemanagement::calculateclosingcost is executed calculate the closing costs for a $1,250,000 property in Houston, Texas, with a conventional 30-year fixed-rate mortgage.",
+                "agent: check_balance is not executed to retrieve the balance of the user's savings account with account number 192676464520."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to look for real estate listings in Sacramento, California, that meet their criteria of 2 bedrooms and 1 bathroom.\n - User needs to review the status of their mortgage application to see if it has been approved using application ID 982374.\n\nBackground: - User's name is Lisa Parks.\n - Lisa is 28 years old.\n - Lisa is a nurse.\n - Lisa's current residence is in San Diego, CA.\n - Lisa\u2019s mortgage application ID is 982374.\n - Lisa is planning to relocate from San Diego to Sacramento, California, and is looking for a house with 2 bedrooms and 1 bathroom. \n - Lisa is reviewing her mortgage application status to ensure a smooth relocation to Sacramento.",
+            "input_problem": "I\u2019m planning to relocate and need to find a place. Can you guide me through the process?",
+            "assertions": [
+                "agent: search_real_estate_listings is executed to provide Lisa with listings for a house in Sacramento, California, with 2 bedrooms and 1 bathroom.",
+                "user: Conversation includes real estate listings for houses in Sacramento, California, with 2 bedrooms and 1 bathroom.",
+                "agent: primary agent provides information about real estate listings for houses in Sacramento, California, with 2 bedrooms and 1 bathroom that align with Lisa's requirements.",
+                "agent: primary agent provides information about Lisa's loan application status (application ID: 982374) that aligns with her requirements.",
+                "user: Conversation includes the status of Lisa's mortgage loan application."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs a review of the movie \"Mortgage.\"\n\nBackground: - User's name is Bea Johnson.\n - Bea is 35 years old.\n - Bea is a pediatric nurse.\n - Bea is currently residing in Charlotte, North Carolina.\n - Bea is curious about the movie \"Mortgage\" but wants to confirm whether it will be worth watching, after hearing about it from her mom.",
+            "input_problem": "Hello! Give me a review about the 1989 \"Mortgage\" movie.",
+            "assertions": [
+                "user: User is informed that the agent does not have any information about a movie called 'Mortgage' from 1989.",
+                "agent: Primary agent mentions that it does not have access to a database of movie reviews or information about fictional films related to mortgages or the lending industry."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to obtain the status of their mortgage application with 184237 as ID.\n\nBackground:  - User's name is Seth Wood.\n - Seth is 40 years old.\n - Seth works as a project manager.\n - Seth lives in Miami, FL.\n - Seth's employee ID is SW2541.\n - Seth prefers the Platinum Rewards credit card.",
+            "input_problem": "Can you provide me with the status of my mortgage application?",
+            "assertions": [
+                "user: Conversation includes the status of the user's mortgage application (ID: 184237)",
+                "agent: Primary agent provides the status of the user's mortgage application (ID: 184237)."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to budget their trip to Tokyo, Japan.\n - User needs to look for a centrally located hotel in Tokyo, Japan, that offers comfortable accommodations.\n - User needs to know if there is a sushi restaurant in Tokyo, Japan, that offers meals costing between $10 and $20 per person.\n\nBackground: - User\u2019s name is Dehlia Reeves.\n - User is 24 years old.\n - User is from Colorado Springs, Colorado.\n - User is a marketing coordinator.\n - User\u2019s hobby is traveling and exploring new cuisines.\n - User is the kind of person who always plans and budgets their trips while seeking cheaper options.",
+            "input_problem": "Hi! Can you help me budget my trip to Tokyo, Japan, and look for a centrally located hotel there that offers comfortable accommodations?",
+            "assertions": [
+                "user: Conversation does not help with budgeting the user's trip to Tokyo, Japan.",
+                "user: Conversation does not include recommendations of centrally located hotel in Tokyo, Japan, that offers comfortable accommodations.",
+                "user: Conversation does not include whether there is a sushi restaurant in Tokyo, Japan, that offers meals costing between $10 and $20 per person.",
+                "agent: Primary agent rejects the user's request about budgeting a trip from California to Tokyo since the request is out-of-domain.",
+                "agent: Primary agent rejects the user's request to look for a centrally located hotel in Tokyo, Japan, that offers comfortable accommodations since the request is out-of-domain.",
+                "agent: Primary agent rejects the user's request to check if there is a sushi restaurant in Tokyo, Japan, that offers meals costing between $10 and $20 per person since the request is out-of-domain."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 User needs the description of the range his 790 credit score falls into, along with an explanation of what that range represents.\n\nBackground: * User's name is Daniel Sy.\n * Daniel's age is 23.\n * Daniel works as a freelance model.\n * Daniel's annual net income is $100,000.\n * Daniel resides in Mesquite, Nevada.\n * Daniel wants to transition into a cashless payment system as he often buys various luxurious things whenever he is traveling for work.\n * Daniel wants to learn more about their credit score, which is 790.",
+            "input_problem": "My credit score is 790 - what does this mean? Can you please describe it to me?",
+            "assertions": [
+                "user: Conversation includes the description of the user's credit score range.",
+                "agent: describe_score_ranges is executed to the description of the user's credit score range."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to review the balance of their savings account with account number NYC9876543210.\n - User needs to obtain their payroll information using their employee ID AB2024-EMP002.\n\nBackground: - User's name is Rose Dale.\n - User's age is 35 years old.\n - User works as a financial analyst based in New York City.\n - User needs to review the balance of their savings account with account number NYC9876543210.\n - User's employee ID is AB2024-EMP002.\n - User regularly checks their financial status to gauge their overall financial health and ensure their income is accurately recorded for future financial planning and loan applications.",
+            "input_problem": "Hi! Can you check the balance of my savings account with account number NYC9876543210?",
+            "assertions": [
+                "user: User is not informed of their account balance for account number NYC9876543210.",
+                "user: Conversation includes the user's payroll information using the user's employee ID AB2024-EMP002.",
+                "agent: check_balance is not triggered to check the balance of the user's savings account with account number NYC9876543210.",
+                "agent: post::hrpayrollbenefits::payroll is executed to provide payroll information to the user using employee ID AB2024-EMP002."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs the status of their loan application with Coastal Breeze Mortgage, using application ID 440087.\n - User needs to search for properties in Monterey, California that have at least 2 bedrooms and 1 bathroom.\n\nBackground: * User's name is Dr. Hanna Turner.\n * Dr. Hanna's age is 45.\n * Dr. Hanna is a marine biologist.\n * Dr. Hanna resides in San Diego, California.\n * Dr. Hanna is currently in the process of evaluating her financial commitments and finding a new home. She is considering canceling her loan application and is also interested in exploring property options In Morterey, CA.",
+            "input_problem": "I need to check the status of my loan application with Coastal Breeze Mortgage, using application ID 440087, as I\u2019m considering canceling it. Can you assist me?",
+            "assertions": [
+                "user: User is informed about the status of their loan application with Coastal Breeze Mortgage, using application ID 440087.",
+                "user: User is informed of properties in Monterey, California, that have at least 2 bedrooms and 1 bathroom.",
+                "agent: mortgage_agent retrieves the status of the user's loan application with Coastal Breeze Mortgage using application ID 440087.",
+                "agent: get::realestatemanagement::searchrealestatelistings is executed to find properties in Monterey, California, that have at least 2 bedrooms and 1 bathroom."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 The user needs to calculate potential monthly mortgage payments for their new home with a home price of $750,000, down payment of $100,000, loan term of 25 years, and an interest rate of 4.25%.\n\u2022 The user needs to estimate the closing costs associated with this home purchase, considering the location in San Francisco, California.\n\nBackground: - User's name is Emily Thompson.\n- Emily's age is 28.\n- Emily resides in Los Angeles, California.\n- Emily is enthusiastic about making a major life change by purchasing a new home in San Francisco, California.\n- Emily needs to calculate potential monthly mortgage payments for her new home with a home price of $1,200,000, down payment of $150,000, loan term of 30 years, and an interest rate of 4.75%.\n- Emily needs to estimate the closing costs associated with this home purchase, considering the location in San Francisco, California.",
+            "input_problem": "Hello, I am the process of buying a house in SF, can you calculate my potential monthly mortgage payments with the following details: a home price of $1,200,000, down payment of $150,000, loan term of 30 years, and an interest rate of 4.75%.",
+            "assertions": [
+                "user: User is informed of potential monthly mortgage payments for the user's new home with the following details: home price of $1,200,000; down payment of $150,000; loan term of 30 years; interest rate of 4.75%.",
+                "user: User is informed of the closing costs associated with the user's home purchase, considering home price of $1,200,000, and location in San Francisco, California",
+                "agent: post::realestatemanagement::calculateclosingcost is executed to estimate the closing costs based on the property value of $$1,200,000 and the location in San Francisco, California.",
+                "agent: post::calculator::calculate is executed to determine the potential monthly mortgage payments for the user's new home, which has a home price of $1,200,000, down payment of $150,000, loan term of 30 years, and an interest rate of 4.75%."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to check the status of their mortgage application using application ID APP123456789.\n - User needs to review their payroll using employee ID EMP987654321 to ensure accurate income documentation.\n\nBackground: - User's name is Clarisse Parker.\n - Clarisse is 38 years old.\n - Clarisse is a chemical engineer.\n - Clarisse's current residence is in Portland, Oregon.\n - Clarisse\u2019s mortgage application ID is APP123456789.\n - Clarisse\u2019s employee ID is EMP987654321.\n - Clarisse is buying a second home as an investment property.\n - Clarisse has a high credit score, a stable income, and substantial savings.\n - Clarisse wants to check the status of her mortgage application and her payroll for financial documentation.",
+            "input_problem": "I\u2019m planning to buy a second home as an investment property, which is why I applied for a mortgage. I just want to check the status of my mortgage application. Can you help me?",
+            "assertions": [
+                "user: Conversation includes Clarisse providing her mortgage application ID before receiving the status of her application.",
+                "agent: primary agent provides Clarisse's mortgage loan application status that aligns with her requirements",
+                "user: Conversation includes the status of Clarisse's mortgage loan application (application ID: APP123456789).",
+                "agent: primary agent provides payroll details for Employee ID EMP987654321, consistent with Clarisse's requirements",
+                "agent: payroll is executed to retrieve the payroll details for Employee ID EMP987654321",
+                "user: Conversation includes Clarisse's payroll details (employee ID: EMP987654321)."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 User needs to find residential real estate listings in Detroit, Michigan, with at least three bedrooms and one bathroom at a minimum price of $200,000.\n \u2022 User needs to obtain the status of their mortgage loan application under their application ID \"MORT-202407-00123\".\n\nBackground: - User's name is Elizabeth Hope Martin.\n - Elizabeth's age is 33.\n - Elizabeth works as a senior manager for a private company.\n - Elizabeth's annual net income is $120,000.\n - Elizabeth resides in Miami, Florida.\n - Due to Elizabeth's busy work schedule, she plans to move to another city to find a new home.\n - Elizabeth wants to be in a safe and not crowded community where she can live peacefully with her family.",
+            "input_problem": "Hey! Can you check residential real estate listings in Detroit, Michigan, with at least three bedrooms and one bathroom at a minimum price of $200,000?",
+            "assertions": [
+                "user: Conversation includes residential real estate listings in Detroit, Michigan, with at least three bedrooms and one bathroom at a minimum price of $200,000.",
+                "user: Conversation includes the status of the user's mortgage loan application under their application ID, MORT-202407-00123.",
+                "agent: search_real_estate_listings is carried out to successfully retrieve residential real estate listings in Detroit, Michigan, with at least three bedrooms and one bathroom at a minimum price of $200,000.",
+                "agent: mortgage_agent provides the status of the mortgage loan application under application ID MORT-202407-00123."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to search for neighborhood data for Fulton County in Atlanta, GA using ZIP code 30303.\n\nBackground: * User's name is Cynthia Roosevelt.\n * User's age is 27 years old.\n * User is a graphic designer working for a small design studio.\n * User would like to move to Atlanta, GA and she is exploring the neighborhoods",
+            "input_problem": "Hi. Could you provide me some details around this zip code area in atl: 30303?",
+            "assertions": [
+                "user: Conversation includes the neighborhood data for Fulton County in Atlanta, GA (ZIP code: 30303).",
+                "agent: search_neighborhood_data is trigged to retrieve the neighborhood data for Fulton County in Atlanta, GA (ZIP code: 30303)."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to search for neighborhood data in Harris County, Houston, Texas, using ZIP code 77001 to determine if this location will provide a good return on investment.\n- User needs to review their credit report using user ID DL2024.\n\nBackground: - User's name is Anthony Lee.\n - Anthony is 40 years old.\n - Anthony is a bakery owner.\n - Anthony's current residence is in Sugar Land, TX.\n - Anthony\u2019s user ID is DL2024.\n - Anthony is planning to open another branch of his bakery business in the near future as an investment.\n - Anthony wants to check the neighborhood data for Harris County, Houston, TX (ZIP code: 77001) \n- Anthony needs to review his credit report using User ID: DL2024.",
+            "input_problem": "Hello! I\u2019m considering opening another branch of my bakery business in Harris County, Houston, TX (ZIP code: 77001), and I\u2019m evaluating whether it\u2019s a good decision. Could you assist me in gathering neighborhood data for that area?",
+            "assertions": [
+                "agent: search_neighborhood_data is trigged to retrieve the neighborhood data for Harris County, Houston, TX (ZIP code: 77001).",
+                "user: Conversation includes the neighborhood data for Harris County, Houston, TX (ZIP code: 77001).",
+                "agent: primary agent provides information about neighborhood data for Harris County, Houston, TX (ZIP code: 77001) that aligns with Anthony's requirements.",
+                "agent: search_credit_reports is executed to provide the credit report for user ID DL2024.",
+                "user: Conversation includes Anthony's credit report (user ID DL2024), including his credit score and description."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs the closing costs for property with a $325,000 property in Tennessee with a fixed loan.\n - User needs neighborhood information about the area in Memphis, Tennessee, with the zip code 38103\n\nBackground: - User's name is Amara Valen.\n - Amara is 28 years old.\n - Amara is a graphic designer.\n - Amara is looking for properties in Memphis, TN.\n - Amara is planning to buy a house and is seeking information about the various expenses associated with closing the deal, as she is unfamiliar with these costs.\n - User's annual household income is around $75,000.\n - User's credit score is 720.",
+            "input_problem": "Hi! I want to know the financial implications of finalizing the transaction of buying a house in Memphis TN.",
+            "assertions": [
+                "user: Conversation includes estimated closing cost for property with a $325,000 property in Tennessee with a fixed loan.",
+                "user: Conversation includes information about the neighborhood in Memphis, Tennessee, with the zip code 38103",
+                "agent: calculate_closing_cost is executed to calculate for the estimated closing cost for property with a $325,000 property in Tennessee with a fixed loan.",
+                "agent: search_neighborhood_data is carried out to get the neighborhood information in Memphis, Tennessee, with the zip code 38103."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to obtain the status of mortgage application progress with application ID 283562\n\nBackground: \u2022 User's name is Emily Johnson.\n \u2022 Emily's age is 29.\n \u2022 Emily's gender is female.\n \u2022 Emily's occupation is Financial Analyst.\n \u2022 Emily's residence is in San Francisco, CA.\n \u2022 Emily needs to check the status of application ID 283562",
+            "input_problem": "Can you let me know the progress on my mortgage application?",
+            "assertions": [
+                "user: Conversation includes the status of Emily Johnson's mortgage loan application using application ID 283562, which has been provided.",
+                "agent: primary agent retrieves the status of the mortgage loan application using 283562 as application ID."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 User needs to search their credit report from the last two years with user ID 632521.\n \u2022 User needs to submit their loan application for the small cabin in Estes Park, Colorado which includes their name, Robert Brown, email robertbrown@gmail.com, annnual income of $50,000, 740 credit score, loan amount of $280,000, and is a fixed loan type.\n \u2022 User needs to calculate the closing cost of the cabin in Estes Park with a fixed-rate mortgage and home price of $300,000.\n\nBackground: - User's name is Robert Brown.\n - Robert's age is 28.\n - Robert's email is robertbrown@gmail.com.\n - Robert's user ID is 632521\n - Robert is a freelance wildlife photographer.\n - Robert resides in Denver, Colorado.\n - Robert is excited about purchasing a small cabin in Estes Park, Colorado, which he plans to use as a retreat for his photography work and outdoor adventures.",
+            "input_problem": "I'm purchasing a small cabin in Estes Park, Colorado, and I need to search my credit report from the last two years with user ID 632521. Second, I need to submit my loan application for this cabin using my name, Robert Brown, email robertbrown@gmail.com, annnual income of $50,000, 740 credit score, loan amount of $280,000, and is a fixed loan type. Can you help me with these tasks?",
+            "assertions": [
+                "user: Conversation includes the user's credit report with user ID 632521.",
+                "user: User is informed that the loan application for the small cabin in Estes Park, Colorado, has been successfully submitted under the name Robert Brown, with the email robertbrown@gmail.com, an annual income of $50,000, a credit score of 740, a loan amount of $280,000, and a fixed loan type.",
+                "user: User is informed of the estimated closing costs for a home priced at $300,000 with a fixed-rate mortgage in Estes Park, Colorado.",
+                "agent: get::creditreport::searchcreditreports is executed to retrieve Robert's credit report from the last two years using user ID 632521.",
+                "agent: Robert Brown's loan application is submitted by the primary agent.",
+                "agent: post::realestatemanagement::calculateclosingcost is executed to estimate the closing costs based on the property value of $300,000 and the location in Estes Park, Colorado."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to find real estate listings in Seattle, Washington, featuring two bedrooms, two bathrooms, and a price range between $350,000 and $600,000.\n - User needs to check the neighborhood data for Seattle, WA 98101, including the crime rate, nearby amenities, and population size.\n\nBackground: - User's name is Emma Reed.\n - Emma is 33 years old.\n - Emma works as a financial analyst.\n - Emma lives in Seattle, WA.\n - Emma has a stable income and good financial stability.\n - Emma is looking for real estate listings featuring at least two bedrooms, two bathrooms, and priced between $350,000 and $600,000.\n - Emma is interested in a safe and well-connected neighborhood with good amenities.",
+            "input_problem": "I need to find real estate listings featuring two bedrooms, two bathrooms, and a price range between $350,000 and $600,000. Can you help me with this?",
+            "assertions": [
+                "user: Conversation includes real estate listings in Seattle, Washington, featuring two bedrooms, two bathrooms, and a price range between $350,000 and $600,000.",
+                "user: Conversation includes neighborhood data for Seattle, WA 98101, including crime rates, nearby amenities, and population size.",
+                "agent: primary agent's response does not include any real estate listings that do not meet the user's criteria of two bedrooms, two bathrooms, a price range between $350,000 and $600,000, and located in Seattle, Washington",
+                "agent: search_real_estate_listings is executed to find real estate listings in Seattle, Washington, featuring two bedrooms, two bathrooms, and a price range between $350,000 and $600,000",
+                "agent: search_neighborhood_data is executed to obtain neighborhood data for Seattle, WA 98101"
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs the credit report with user ID 4587.\n - User needs recommendations for houses for sale in Bridgeport, Connecticut with 2-3 bedrooms, 2 bathrooms within $400,000 budget\n\nBackground:  - User's name is Samuel Anderson\n - Samuel is 26 years old\n - User's user ID is 4587\n - He is intending to purchase a property in Bridgeport, Connecticut\n - Samuel is working as a DevOps Engineer\n - His annual income is $90,000\n - User wants to have a 2-3 bedrooms, 2 bathrooms within $400,000 budget",
+            "input_problem": "Hi! I need a detailed credit report for my loan approval. Could you please provide it? Thanks! My user ID is 4587.",
+            "assertions": [
+                "user: Conversation includes the credit report of Samuel for the user's loan approval.",
+                "user: Conversation includes a listing of houses with 2-3 bedrooms, 2 bathrooms in Bridgeport, Connecticut and budget of $400,000.",
+                "agent: search_credit_reports is carried out to retrieve user's credit report with user ID 4587.",
+                "agent: search_real_estate_listings is carried out to provide user with recommendations based on their preferences."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to look through different condos in New York City with 1 bedroom and 1 bathroom that offer panoramic views of the city skyline through large windows.\n - User is looking for an update on the progress of their mortgage loan application associated with the ID: HSN-526-2024-5277.\n\nBackground: - User's name is John Williams.\n - John's age is 35.\n - John's gender is male.\n - John's occupation is Marketing Communications Manager.\n - John's residence is in New York City.\n - John is considering purchasing a condominium.",
+            "input_problem": "Could you help me find condominiums in New York City with 1 bedroom and 1 bathroom that offer panoramic views of the city skyline through large windows?",
+            "assertions": [
+                "user: Conversation includes condo listings in New York City with 1 bedroom and 1 bathroom that offer panoramic views of the city skyline through large windows.",
+                "user: Conversation includes the current status of the mortgage loan application with ID: HSN-526-2024-5277.",
+                "agent: search_real_estate_listings is executed to find condo listings in New York City with 1 bedroom and 1 bathroom.",
+                "agent: primary agent provided the status of the mortgage loan application with ID HSN-526-2024-5277."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 User needs to book an appointment with their gynecologist.\n \u2022 User needs to have some restaurant recommendations within the city of Henderson that offers Asian cuisines.\n\nBackground: \u2022 User\u2019s name is Yosha Cole.\n \u2022 Yosha\u2019s age is 25 years old. \n \u2022 Yosha\u2019s birthday is on May 7, 1999.\n \u2022 Yosha resides at 310 New Hope Dr, Henderson, NV 89014. \n \u2022 Yosha plans to visit her gynecologist and is looking for restaurants to dine at after her appointment.",
+            "input_problem": "I need to book an appointment with my gynecologist.",
+            "assertions": [
+                "user: User is informed that the agent cannot book an appointment with the user's gynecologist, as this is beyond the agent's capabilities.",
+                "user: User is informed that the agent cannot provide some restaurant recommendations within the city of Henderson that offers Asian cuisines, as the request is out of scope.",
+                "agent: primary agent rejects the user's request on booking an appointment with their gynecologist",
+                "agent: primary agent rejects the user's request to find some restaurant recommendations within the city of Henderson that offers Asian cuisines"
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to apply for a healthcare loan to cover the cost of a specialized asthma treatment for their children.\n - User needs to create a weekly meal plan that caters specifically to asthma-friendly foods.\n\nBackground: - User's name is Jaya Smith.\n - Jaya is 43 years old.\n - Jaya is a freelance videographer.\n - Jaya's current residence is in New York.",
+            "input_problem": "Please assist me in applying for a healthcare loan to cover my son's specialized asthma treatment.",
+            "assertions": [
+                "user: Conversation does not proceed to apply for a healthcare loan due to an out-of-scope input problem.",
+                "user: Conversation does not create a weekly meal plan that caters specifically to asthma-friendly foods due to an out-of-scope input problem.",
+                "agent: primary agent rejects assisting Jaya to apply for a healthcare loan",
+                "agent: primary agent rejects to assist Jaya in creating a weekly meal plan that caters specifically to asthma-friendly individuals"
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs listings for luxury villas in Beverly Hills, CA.\n- User needs to obtain their credit score using 83745GFJKW as user ID.\n- User needs to apply for a mortgage loan for $2,500,000 to purchase a property. \n\nBackground:  - User's name is Miles Johnson\n - User's email address is m.johnson@gmail.com\n - User's user ID is 83745GFJKW\n - Miles is planning to buy a luxury villa to serve as a family vacation home\n - User wants a property with 6 bedrooms, 7 bathrooms, and over 8,000 square feet of living space.\n - User wants to have a home theater, private gym with a sauna, wine cellar, and a sophisticated security system.\n - User wants to have a fixed term loan of $2,500,000\n - Miles is a business executive of InnovateTech Solutions with an annual income of $250,000.",
+            "input_problem": "Hello! I am seeking to purchase a luxury villa in Beverly Hills, CA to serve as a family vacation home. The property requirements include 6 bedrooms, 7 bathrooms, and over 8,000 square feet of living space. Additionally, I would like to apply for a mortgage loan to finance this purchase. Could you please provide assistance with both the property search and the mortgage application process?",
+            "assertions": [
+                "user: Conversation includes promising listings of luxury properties in Beverly Hills, CA based on user's property requirements.",
+                "user: conversation includes that the mortgage application has been submitted.",
+                "user: Conversation includes the user's credit score.",
+                "agent: search_real_estate_listings is carried out to provide user with recommendations based on their preferences.",
+                "agent: mortage_agent processes the user's mortgage loan application.",
+                "agent: search_credit_reports is carried out to retrieve the user's credit score using 83745GFJKW as user ID."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 User needs to submit a loan application with the following information: Len Jones, contact info lenjones@gmail.com and phone number (415) 555-6789, is applying for a $300,000 fixed-type loan for the property at 8711 E St, Oakland, CA 94621, using loan application_id FXL143123; she is a Software Engineer at Accenture with an income of $95,000 and a credit score of 750.\n \u2022 User needs to know the estimated property value, which will be a 1,500 sq. ft. house located at 8711 E St, Oakland, CA 94621, with a median home value of $1,500,000, 4 bedrooms, 3 bathrooms, a nearby mall, and situated in a low-crime neighborhood.\n\nBackground: \u2022 User\u2019s name is Len Jones. \n \u2022 Len\u2019s age is 3- years old. \n \u2022 Len\u2019s birthday is on March 17, 1994.\n \u2022 Len\u2019s residence is at 1011 Lockheed Way #12, Palmdale, CA 93550. \n \u2022 Len plans to invest in income-generating businesses and begin her real estate ventures by purchasing a property in Oakland, California, with the intention of renovating it to increase its market value.",
+            "input_problem": "I need help starting my real estate ventures and require assistance in submitting a loan application to finance my plan to purchase a property within California.",
+            "assertions": [
+                "user: User is informed that their loan application has been submitted successfully, aligning with their details and chosen loan type.",
+                "user: User is informed that the calculated property value that matches the final property appearance or outcome.",
+                "agent: Primary agent asks for the user's details needed for the loan application.",
+                "agent: Mortgage agent asks for the user's details, including their full name, email address, annual income amount, and estimated credit score, before proceeding with the submission of the loan application.",
+                "agent: Primary agent's response on finding the estimated property value aligns with the user's request to determine the value of the real estate listing based on general information after renovation and improvements.",
+                "agent: post::realestatemanagement::calculatepropertyvalue is triggered to get the value of a 1,500 sq. ft. house located at 8711 E St, Oakland, CA 94621, with a median home value of $1,500,000, 4 bedrooms, 3 bathrooms, a nearby mall, and situated in a low-crime neighborhood."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to adopt a rescue dog\n\nBackground: - User's name is Mark Lee\n - User's ID is mark_213\n - User's preferred dog is labradoodle",
+            "input_problem": "Where can I find a labradoodle to adopt?",
+            "assertions": [
+                "user: user is informed that agent cannot assist with user's request to adopt a rescue labradoodle",
+                "agent: primary agent indicates that it cannot assist with adopting a dog"
+            ]
+        },
+        {
+            "scenario": "Goals: -User needs the status of mortgage application progress with application ID 321123.\n\nBackground: - User's name: Sam Smith\n - User is 35 years old\n - User's application ID: 321123\n - User works as a financial strategist\n - User wants to buy a home in the near future",
+            "input_problem": "Hello. Can you let me know the progress on my mortgage application? I am worried about the timeline and if there are additional documents I need to provide.",
+            "assertions": [
+                "user: Conversation includes the status of Sam Smith's mortgage loan application using application ID 321123, which has been provided.",
+                "agent: primary agent provides the status of the user's mortgage loan application."
+            ]
+        }
+    ]
+}

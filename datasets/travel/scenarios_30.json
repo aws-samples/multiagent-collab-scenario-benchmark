@@ -1,0 +1,316 @@
+{
+    "scenarios": [
+        {
+            "scenario": "Goals: - User needs to know the distance of their bicycle tour tomorrow from their home at 770 E 6th St, Beaumont, CA 92223, to their destination in Idyllwild, CA.\n - User needs to know the weather for tomorrow, October 19, 2024, at their destination in Idyllwild, CA.\n - User needs a list of restaurant recommendations near their destination in Idyllwild, CA, that offer Italian cuisine.\n\nBackground: * User's name is Andrea Jones.\n * User's age is 24 years old.\n * User's birthday is August 08, 1999.\n * User resides at 770 E 6th St, Beaumont, CA 92223.\n * User's occupation is Freelancer.\n * User's hobbies are cycling, climbing, and hiking.\n * User has upcoming plans for a bicycle tour to Idyllwid, CA.",
+            "input_problem": "I am going on a bicycle tour tomorrow. I want to know the distance from my home to the destination of my bicycle tour, as well as the weather forecast for tomorrow at my destination.",
+            "assertions": [
+                "user: User is informed of the distance from their home at 770 E 6th St, Beaumont, CA 92223, to their destination in Idyllwild, CA.",
+                "user: User is informed about weather forecast for tomorrow, October 19, 2024, at their destination in Idyllwild, CA.",
+                "user: User is informed of Italian restaurants in Idyllwild, CA.",
+                "agent: calculate_distance is executed to get distance between 770 E 6th St, Beaumont, CA 92223, and Idyllwild, CA.",
+                "agent: get_tomorrow_weather_by_location is executed to retrieve weather forecast for tomorrow, October 19, 2024, at their destination in Idyllwild, CA.",
+                "agent: searchrestaurant is executed to find Italian restaurant recommendations in Idyllwild, CA."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to find a romantic restaurant in the San Francisco area and offers Italian or French cuisine.\n - User needs to find farmers markets near San Francisco. \n\nBackground: * User's Name: Diego Hemsworth\n * Age: 35\n * Occupation: Accountant\n * Status: Married\n * Residence: San Francisco, California\n * Travel Purpose: Anniversary date\n * Destination Preference: 1-hour drive from San Francisco",
+            "input_problem": "I'm planning to have dinner with my wife tonight at a romantic destination nearby. Can you help me?",
+            "assertions": [
+                "user: Conversation includes a recommendation for an Italian or French restaurant that offers a romantic dinner in the San Francisco area.",
+                "user: Conversations includes farmers markets near San Francisco.",
+                "agent: Conversation includes gathering information from Diego about his preferred location or restaurant characteristics before providing a recommendation.",
+                "agent: SearchRestaurant is executed to retrieve Italian or French restaurants that offers a romantic dinner in the San Francisco area.",
+                "agent: 'search' is executed to retrieve farmer markets near San Francisco."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to book two tickets for a round-trip economy flights from DEN to RST, departing on June 23, 2024, and returning on June 30, 2024.\n - User needs to book a Standard room at in Rochester, Minnesota for June 23, 2024 to June 30, 2024.\n - User needs to obtain the total estimated cost including flight, hotel, food/meals, and local transportation for their 7-day trip from Denver to Minnesota for one person, given their $2,500 weekly budget.\n\nBackground: * User's full name is Gregory James Anderson.\n * Gregory is 36 years old.\n * Gregory resides in Denver, Colorado.\n * Gregory has a Bachelor's degree in Computer Science.\n * Gregory plans to accompany his father for a kidney transplant at a renowned medical institution in Rochester, Minnesota.\n * Gregory's preferred class for flights is economy class.\n * User's preferred room type is Standard room",
+            "input_problem": "Please book two tickets for a round-trip economy flight from DEN to RST, departing on June 23, 2024. I also need to book a Standard room at a hotel in Minnesota from June 23, 2024 to June 30, 2024.",
+            "assertions": [
+                "user: User is informed that two tickets for a economy flight from DEN to RST departing on June 23, 2024 have been booked.",
+                "user: User is informed that tickets for a economy flight from RST to DEN have been booked for two people. The flight from DEN to RST departs on June 23, 2024 ",
+                "user: User is informed that a room in a hotel in Rochester, Minnesota from June 23, 2024 to June 30, 2024 has been booked.",
+                "agent: book_flight is executed to book two tickets for a round-trip economy flight from DEN to RST on June 23, 2024",
+                "agent: book_hotel is executed to book a hotel in Minnesota from June 23, 2024 to June 30, 2024",
+                "agent: search_flight is executed before book_flight to provide the user with flight options before performing the booking",
+                "agent: search_hotel is executed before book_hotel to provide the user with options before performing the booking",
+                "user: User is informed of the total estimated cost including flight, hotel, food/meals, and local transportation for their 7-day trip from Denver to Minnesota for one person, given their $2,500 weekly budget."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs the weather conditions expected in Las Vegas for tomorrow, August 5, 2024.\n - User needs to search for a direct flight from Denver International Airport to McCarran International Airport, Las Vegas departing tomorrow morning, August 5, 2024.\n\nBackground: * User's name: Mickey Alwyn\n * User's Age: 35\n * User's occupation: Entrepreneur\n * User's residence: Denver, Colorado\n * User is the founder of a tech startup specializing in sustainable energy solutions\n * User travels frequently across the country for meetings and conferences\n * User values efficiency in travel logistics and enjoys planning detailed itineraries\n * User is particularly fond of Las Vegas for its vibrant atmosphere and business opportunities",
+            "input_problem": "Hi. Could you please tell me the weather conditions for Las Vegas tomorrow, August 5, 2024?",
+            "assertions": [
+                "user: User is informed about the weather forecast for Las Vegas tomorrow (August 05, 2024).",
+                "user: User is informed about the available direct flight options for a trip from Denver International Airport to McCarran International Airport in Las Vegas for tomorrow (August 05, 2024).",
+                "agent: get_tomorrow_weather_by_city is triggered to find information on the weather conditions expected in Las Vegas tomorrow (August 05, 2024).",
+                "agent: search_flights is triggered to search for a direct flight from Denver International Airport to McCarran International Airport departing tomorrow (August 05, 2024)."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to find an Airbnb in Eugene, Oregon for the dates of January 2nd to January 10th, 2026.\n - User needs to obtain the estimated total cost of the 8-day trip, including the Airbnb rental, $300 for food costs, and $150 for entertainment expenses.\n\nBackground: * User's name is Jake Stevens\n * User's age is 28\n * User's occupation is Professional athlete (specializing in track and field)\n * User resides in Los Angeles, California\n * User has upcoming travel for preparation for an upcoming competition\n * User wants to spend $300 on food costs and $150 for entertainment",
+            "input_problem": "I need to prepare for an upcoming competition by finding suitable airbnb in in Eugene, Oregon (January 2nd-10th, 2026) for my training needs. Can you give me airbnb recommendations and the estimated total cost for this 8-day trip, including the cost of an Airbnb rental, $300 for food costs, and $150 for entertainment expenses?",
+            "assertions": [
+                "user: User is informed about Airbnbs in Eugene, Oregon for January 2nd-10th, 2026.",
+                "user: User is informed of total estimated expenses for their 8-day trip January 2nd-10th, 2026 to Eugene, Oregon, including the cost of their accommodation, $300 for food costs, and $150 for entertainment expenses.",
+                "agent: post::bookairbnb::searchairbnb is executed to retrieve availability of Airbnb for user accommodations in Eugene, Oregon for January 2nd-10th, 2026.",
+                "agent: total budget is estimated including the cost for the accommodation, $300 for food costs, and $150 for entertainment expenses."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to check the seat availability on their flight DL175 from Miami, Florida, to Haines, Alaska, departing on November 7 and returning on November 10, 2024.\n - User needs to book a standard room at a hotel in Haines, Alaska, from November 7\u201310, 2024.\n - User needs to find tourist destinations such as historical sites and local clubs in Haines, Alaska.\n\nBackground: * User's name is Michael Johnson\n * User's age is 49\n * User's occupation is a Professor\n * User has an upcoming trip to Haines, Alaska with flight number DL175\n * User's ticket number is HBFGVW2\n * User's preferred seat is 77C\n * User consistently selects economy flights from Miami International Airport due to the affordable prices",
+            "input_problem": "My ticket number is HBFGVW2, can you tell me the available seats on my flight?",
+            "assertions": [
+                "user: User is informed on available seat options for flight DL175 from Miami, Florida, to Haines, Alaska, for November 7, 2024, based on their ticket number HBFGVW2.",
+                "user: Conversation includes booking a standard room at a hotel in Haines, Alaska, for November 7\u201310, 2024.",
+                "agent: get_available_seats is executed to retrieve the available seats on flight DL175 from Miami, Florida, to Haines, Alaska, based on their ticket number HBFGVW2 for November 7 2024.",
+                "agent: book_hotel is carried out to retrieve hotel availability for standard room at a hotel in Haines, Alaska, for November 7\u201310, 2024.",
+                "agent: search is carried out to retrieve information about tourist destinations that is consistent with the user's request.",
+                "user: Conversation includes tourist destinations\u00a0such as historical sites and local clubs in Haines, Alaska."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to book an economy round-trip flight for 2 from LA to Hawaii for Christmas, departing December 20th and returning December 25th, 2024, with preferred seats 31A and 31B.\n - User needs to check the weather forecast in Honolulu, Hawaii for tomorrow, December 13, 2024.\n\nBackground: * User's Name is Emma Thompson.\n * User's age is 35.\n * User's preferred seats are 31A and 31B. \n * User's residence is in Los Angeles, USA.\n * User's net income is $2,000 per month.",
+            "input_problem": "Hello, could you assist me in booking an economy round-trip flight from Los Angeles to Hawaii for two people, departing on December 20 and returning to Los Angeles on December 25, 2024? ",
+            "assertions": [
+                "user: User is informed of the successful booking of an economy round-trip flight for 2 people from Los Angeles to Hawaii, departing on December 20, 2024, and returning on December 25, 2024.",
+                "user: Conversation includes weather forecast for tomorrow in Honolulu, Hawaii.",
+                "agent: search_flights is triggered to find available flight options and pricing for 2 round-trip economy class tickets from Los Angeles (LAX) to Hawaii, departing on December 20, 2024 and returning on December 25, 2024.",
+                "agent: get_tomorrow_weather_by_city is executed to get the weather for tomorrow December 13, 2024 in Honolulu, Hawaii.",
+                "agent: select_seat is executed to book seats 31A and 31B if they are available."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to book two tickets for the US Open tennis tournament with event ID 1234567890 and requests that the tickets be sent to their email address at michael.bennett@email.com.\n - User needs to know the distance from LaGuardia Airport (40.776863, -73.874069) to the USTA Billie Jean King National Tennis Center (40.750694, -73.846336).\n - User needs to update their car reservation from a compact car to a full-size SUV with the confirmation number ZYX9876543 and Bennett as last name, if full-size SUV is available.\n\nBackground: * User's name is Michael Bennett.\n * Michael is 56 years old.\n * Michael's email address is michael.bennett@email.com.\n * Michael's expertise is in financial planning and analysis.\n * Michael's confirmation number for his rental car confirmation number is ZYX9876543 and Bennett as last name.\n * Michael wants to attend the US Open tennis tournament to support his son, James, who is competing.",
+            "input_problem": "I would like to attend my son's tennis match at the US Open. Could you assist me in booking two tickets for myself and my wife? Please also give me the distance from LaGuardia Airport to the USTA Billie Jean King National Tennis Center.",
+            "assertions": [
+                "user: User is informed that 2 tickets for the US Open have been booked",
+                "agent: new_order_event is triggered to book 2 tickets for the US Open using michael.bennett@email.com as email address.",
+                "user: Conversation includes the travel distance from LaGuardia Airport to the USTA Billie Jean King National Tennis Center",
+                "agent: calculate_distance is triggered to calculate the distance from LaGuardia Airport to the USTA Billie Jean King National Tennis Center.",
+                "user: If a full-size SUV rental is available, User is informed that a full-size SUV rental has been booked. TRUE if full-size SUV is not available.",
+                "agent: If a full-size SUV rental is available, an agent attempted to update vehicle from compact car to full-size SUV. TRUE if full-size SUV is not available."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to know the weather tomorrow, August 10, 2024, in Los Angeles, CA. \n - User needs to obtain a list of recommended nature hiking trails around a 5-mile radius from their residence at 822 E 20th Street, Los Angeles, CA, 90011, preferably those with some elevation gain and scenic views.\n\nBackground: * User's name is Andrea Jones\n * User's age is 25 years old\n * User's occupation is Teacher\n * User resides at 822 E, 20th Street, Los Angeles, CA 90011\n * User's hobbies include hiking, climbing, and vlogging\n * User has upcoming plans for hiking",
+            "input_problem": "I am planning to go on a hike tomorrow. I need to know the weather for tomorrow, August 10, 2024, in Los Angeles, CA.",
+            "assertions": [
+                "User: User is informed of the weather forecast for tomorrow, August 10, 2024, in Los Angeles, CA.",
+                "user: User is informed of some nature hiking trail destination recommendations around a 5-mile radius from their residence at 822 E 20th Street, Los Angeles, CA, 90011 that offer some elevation and scenic views. Or, user is informed that there is no hiking trail nearby.",
+                "agent: search_by_text is triggered to find nature hiking trail destination recommendations around a 5-mile radius of their residence at 822 E 20th Street, Los Angeles, CA, 90011 that offer some elevation and scenic views.",
+                "agent: get_tomorrow_weather_by_city is executed to get the weather forecast for tomorrow, August 10, 2024, in Los Angeles, CA."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to book a round-trip business flight from Oakland to San Francisco, California on August 7, 2024, returning on August 11, 2024.\n - User needs to obtain the weather forecast for tomorrow, August 7, 2024, in San Francisco, USA.\n\nBackground: * The user\u2019s name is James Anderson.\n * James\u2019s occupation is Corporate Consultant.\n * James resides in Oakland, California.\n * James has an upcoming trip to San Francisco, California.\n * James\u2019s preferred class for flights is business class.\n * James\u2019s trip is from August 7 to August 11, 2024.",
+            "input_problem": "I need help booking a business flight from Oakland to San Francisco, California. I also need assistance to obtain the weather forecast for tomorrow, August 7, in San Francisco, USA.",
+            "assertions": [
+                "user: Conversation indicates that the flight options match the user's preferred departure and arrival dates and times.",
+                "user: Conversation includes the weather forecast for tomorrow, August 7, in San Francisco, USA.",
+                "agent: book_flight is triggered to book a round-trip business flight from Oakland to San Francisco, California on August 7, 2024, returning on August 11, 2024.",
+                "agent: get_tomorrow_weather_by_city is triggered to find weather conditions for tomorrow, August 7, in San Francisco, USA."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to book a round-trip economy flight from Chicago O'Hare (ORD) to Paris (CDG), departing on April 15, 2024, and returning on April 20, 2024.\n - User needs to reserve a standard hotel room in Paris for a 5-night stay from April 15 to April 20, 2024.\n - User needs recommendations for local attractions and activities in Paris.\n\nBackground: - User's name is Amanda Davis.\n - Amanda is 30 years old.\n - Amanda works as a Software Engineer.\n - Amanda resides in Chicago, IL.\n - Amanda has an upcoming trip to Paris from April 15-20, 2024.\n - Amanda prefers departing from Chicago O'Hare (ORD) in economy class.\n - Amanda prefers staying in a standard hotel room.\n - Amanda wants to explore local attractions and activities in Paris.",
+            "input_problem": "I need to plan a vacation to Paris so I need assistance booking a round-trip flight to Paris. I also need to book a hotel for my stay.",
+            "assertions": [
+                "user: Conversation includes roundtrip economy flight options between Chicago O'Hare (ORD) and Paris (CDG) for the dates April 15-20, 2024.",
+                "user: User is informed that a standard hotel room in Paris has been booked for a 5-night stay from April 15 to April 20, 2024.",
+                "user: Conversation includes recommendations for local attractions and activities in Paris.",
+                "agent: local_expert_agent is called to find local attractions and activities in Paris.",
+                "agent: book_hotel is executed to book a standard hotel room in Paris for a 5-night stay from April 15 to April 20, 2024.",
+                "agent: post::bookflight::bookflight is executed to book a round-trip economy flight from Chicago O'Hare (ORD) to Paris (CDG) for April 15-20, 2024.",
+                "agent: search_flights is executed to find round-trip economy flight options from Chicago O'Hare (ORD) to Paris (CDG) for April 15-20, 2024."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs medical advice on the best treatment for their health issue.\n - User needs updates on whether their loan application has been processed.\n\nBackground: - User's name is Carmelo James Smith\n - Carmelo's age is 29\n - Carmelo's occupation is Sales Agent\n - Carmelo resides in Atlanta, Georgia\n - Carmelo's annual net income falls between $40,000 and $50,000\n - Carmelo's hobbies include collecting toy figures, playing e-sports games, and trading valuable cards",
+            "input_problem": "Hey there! Can you help me by giving medical advice on what the best treatment is for my health issue and what is the status of my loan application? ",
+            "assertions": [
+                "user: Conversation indicates that any medical advice regarding the best treatment for the user's health issue cannot be provided.",
+                "user: User is informed that their loan application status could not be retrieved.",
+                "agent: Primary agent states that it cannot provide any medical advice regarding the best treatment for the user's health issue.",
+                "agent: Primary agent states that it cannot provide the user's\u00a0their loan application status."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to find a city or locations near Seattle with hiking trails.\n - User needs to locate restaurants in Seattle that offer Italian cuisine, are dog-friendly, and have outdoor seating.\n\nBackground: - User's name is Casey Swift.\n - Casey is 29 years old.\n - Casey works as a Product Manager.\n - Casey resides in Seattle.\n - Casey occasionally takes weekend trips to unwind, focusing on hiking and birdwatching.\n - Casey enjoys dining at pet-friendly outdoor restaurants.\n - Casey prefers Italian cuisine.",
+            "input_problem": "I want to explore some beautiful hiking spots and also do some birdwatching. Any suggestions?",
+            "assertions": [
+                "user: Conversation includes recommendations for cities or locations near Seattle that offer hiking trails.",
+                "user: Conversation includes recommendations for restaurants in Seattle that offer Italian cuisine, are dog-friendly, and have outdoor seating.",
+                "agent: search_by_text is executed to find locations in Seattle that offer hiking trails.",
+                "agent: SearchRestaurants is executed to search for restaurants in Seattle that offer Italian cuisine, are dog-friendly, and have outdoor seating."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to see a picture of the Tower of Pisa\n - User needs to find an Airbnb for 10 people with dormitory-style lodging in Columbus, Ohio from June 12 to June 13, 2024.\n\nBackground: * User's name is Alex Gonzalez\n * User's age is 21\n * User's occupation is Tutor\n * User's residence is in New York\n * User's current location is Ohio, where he is visiting a surboard trade show\n * User is interested in environmentally friendly and cost-effective options for traveling",
+            "input_problem": "Can you show me a picture of the Tower of Pisa?",
+            "assertions": [
+                "user: User is informed that the agent does not have the capability to display pictures.",
+                "agent: Primary agent rejects the request to display a picture of the Tower of Pisa.",
+                "agent: search_airbnb is executed to get Airbnb options for 10 people with dormitory-style lodging in Columbus, Ohio from June 12 to June 13, 2024."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to register as a member and purchase one ticket to the Music Festival 2024 event happening at the Boom Boom Room in San Francisco, California on October 15, 2024 with event ID MF12224 using \"barbie_shu@email.com\" as email address.\n - User needs to calculate 2462 US dollars in euros given the exchange rate of 1 EUR = 1.18 USD.\n\nBackground: * User's name is Barbie Shu.\n * User's age is 32.\n * User's email address is \"barbie_shu@email.com\".\n * Interest is enjoying attending music festivals.",
+            "input_problem": "Hi, I need help purchasing 1 ticket for Music Festival 2024 happening at the Boom Boom Room in San Francisco on October 15, 2024 (event ID MF1224). Send the confirmation ticket to barbie_shu@email.com",
+            "assertions": [
+                "user: User is informed that the agent cannot help on the task.",
+                "agent: User is informed that the agent cannot help on the task."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to search for wood crafting events in San Francisco, California using \"wood crafting\" as keywords.\n - User needs to review their car rental reservation with confirmation number TSK3778 under the driver's name, Ally Sean.\n\nBackground: * User's name is Ally Sean.\n * User's age is 26.\n * User's occupation is Interior designer.\n * User's residence is in Las Vegas, Nevada.\n * User has an upcoming interest in attending wood crafting events in San Francisco, California.",
+            "input_problem": "I need to search for wood crafting events in San Francisco, California.",
+            "assertions": [
+                "user: User is informed of wood crafting events in San Francisco, California.",
+                "user: Conversation includes the car rental reservation with confirmation number TSK3778 under the driver's name, Ally Sean.",
+                "agent: post::eventbrite::searchevent is called to find wood crafting events in San Francisco, California.",
+                "agent: post::carrental::viewreservation is carried out to display the user's car rental reservation, with confirmation number TSK3778, under the driver's name Ally Sean."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to get the weather details for tomorrow, April 3, 2025 in San Francisco.\n - User needs to find a Japanese restaurant in San Francisco.\n - User needs to find events for kids for tomorrow, April 3, 2025, in San Francisco.\n\nBackground: * User's name is Jason Knight\n * User's age is 27\n * User's occupation is a Data Analyst\n * User's current situation is that tomorrow is the last day of his stay in the city, so he wants to ensure everything will be perfect\n * User's interests include Japanese foods and art",
+            "input_problem": "It's my last day here tomorrow, and I want to make the most of it. Could you please provide the weather details for tomorrow, April 3, 2025? Additionally, I'd appreciate some restaurant recommendations.",
+            "assertions": [
+                "user: User is informed about the weather details for tomorrow, April 3, 2025.",
+                "user: Conversation indicates Japanese restaurants in San Francisco.",
+                "user: Conversation indicates events for kids in San Francisco for tomorrow, April 3, 2025.",
+                "agent: Primary agent asks Jason's current location/city before providing the weather details.",
+                "agent: SearchRestaurants is executed to get Japanese restaurant options in San Francisco.",
+                "agent: weather_agent executes an action to get the weather forecast in San Francisco on April 3, 2025."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to find highly-rated Cajun restaurants in New Orleans for their weekend trip August 17 - August 18, 2024. \n - User needs to find car rentals in New Orleans to explore the city.\n\nBackground: * User's name is Rachel Swift\n * User's age is 35\n * User's occupation is Event Planner\n * User resides in Atlanta, Georgia\n * User's current situation is planning a weekend getaway\n * User's travel interest includes exploring local cuisine and cultural experiences\n * User's travel planning style prefers a mix of planned activities and spontaneous exploration",
+            "input_problem": "I need to find Cajun restaurants for our weekend trip. Can you help me with that?",
+            "assertions": [
+                "user: Conversation includes recommendations for highly-rated Cajun restaurants in New Orleans.",
+                "user: Conversation includes a list of car rental options in New Orleans for a date span covering at least August 17- August 18 2024.",
+                "agent: SearchRestaurants is executed to search for highly-rated Cajun restaurants in New Orleans.",
+                "user: Conversation shows that the agent asks for the location before searching for Cajun restaurants.",
+                "agent: get_car_locations is executed to search for car rental options in New Orleans."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to find information on any fashion weeks in Milan, Italy in September 2023.\n - User needs to calculate 47652 US dollars in euros given the exchange rate of 1 EUR = 1.20 USD.\n\nBackground: * User's name is Lyka Underwood.\n * User's age is 26.\n* User's planing a trip to Milan and would like to get their checking account balance, $47652, into euros.\n* Current exchange rate is\u00a01 EUR = 1.20 USD.",
+            "input_problem": "Hello! Could you please let me know if there were any fashion weeks in Milan, Italy in September 2023? I am writing my thesis on Fashion events in travel destinations.",
+            "assertions": [
+                "user: User is informed of the fashion week events in Milan, Italy in September 2023.",
+                "agent: search_event is executed to retrieve the fashion events in Milan, Italy in September 2023."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to get the general information regarding \u00c5lesund and Trondheim areas.\n - User needs to view their hotel reservation details in \u00c5lesund with confirmation number LKH7780558.\n\nBackground: * User's name is Dr. Lisa Silva\n * User's age is 35\n * User's occupation is Environmental scientist and activist\n * User resides in Boulder, Colorado\n * User travels occasionally for work and personal environmental projects\n * User has an upcoming trip planned to Norway to explore opportunities for environmental conservation and activism\n * User's travel planning style is methodical and focused on finding destinations that align with environmental interests and sustainability goals",
+            "input_problem": "Can you get me info regarding \u00c5lesund and Trondheim areas?",
+            "assertions": [
+                "user: User is informed of the general information regarding \u00c5lesund and Trondheim area.",
+                "user: User is informed of their hotel reservation details in \u00c5lesund with confirmation number LKH7780558.",
+                "agent: post::newssearch::search is executed to provide the latest regarding \u00c5lesund and Trondheim area.",
+                "agent: post.bookhotel.viewreservation is triggered to view user's hotel reservation in \u00c5lesund."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to look for a suitable venue, preferably a hotel or conference center, within a 5-mile radius from Union Square in San Francisco.\n - User needs to look for sushi restaurant near Union Square.\n\nBackground: * User's name is Derek Morgan\n * User's age is 45\n * User's occupation is an experienced Event Coordinator\n * User's residence is in San Francisco, California",
+            "input_problem": "Hi. Can you help me look for a conference venue near downtown San Francisco, preferably a hotel or conference center within a 5-mile radius of Union Square?",
+            "assertions": [
+                "user: Conversation includes multiple venue options for the conference near downtown San Francisco, focusing on hotels and conference centers within a 5-mile radius of Union Square in San Francisco.",
+                "user: Conversation includes a selection of sushi restaurants near Union Square.",
+                "agent: search_by_text is triggered to look for a suitable venue, preferably a hotel or conference center, within a 5-mile radius from Union Square in San Francisco.",
+                "agent: SearchRestaurants is triggered to look for sushi restaurants near Union Square."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to know the weather forecast for tomorrow, April 26, 2027, in Tokyo, Japan.\n - The user needs help searching for ramen restaurants within Tokyo City.\n\nBackground: * User's name is Stephanie Son.\n * User's Occupation is Design Engineer.\n * The user's hobbies are travel and photography.\n * User's age is 28.\n * User's Residence is in San Francisco, USA.\n * User's travels frequently for photography assignments and personal exploration.\n * User's upcoming travel goal is to capture the essence of Tokyo through photography.\n * User has a passion for street photography and exploring local cuisines.",
+            "input_problem": "I will be arriving in Tokyo, Japan tomorrow and would appreciate assistance checking the weather forecast to decide if it will be suitable for exploring the city.",
+            "assertions": [
+                "user: User is informed of Tokyo's weather forecast for tomorrow, April 26, 2027.",
+                "user: User is informed of ramen restaurants available in Tokyo City.",
+                "agent: action get_tomorrow_weather_by_city is executed to obtain the weather forecast for Tokyo tomorrow, April 26, 2027, including the primary weather condition, description, temperature, and humidity.",
+                "agent: search_restaurant is executed to look for available ramen restaurants in Tokyo City based on user's preferences.",
+                "agent: travel_agent provides a list of ramen restaurants located in Tokyo City, tailored to the user's preferences."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to book a room in San Francisco from June 23, 2024, to June 30, 2024, using hotel ID SF001. \n - User needs to know the distance from San Francisco International Airport (37.6213129,-122.3789554) to the Golden Gate Bridge (37.8199,-122.4783).\n\nBackground: * User's name is Sophie Anderson.\n * User's age is 36.\n * User's occupation is Marketing Manager.\n * User has a Master\u2019s degree in Business Administration.\n * User's income is $70,000.\n * User's date of birth is March 15, 1988.\n * User's preferred room type is standard room\n * User is interested in exploring new cultures and destinations with her family.\n * User has an upcoming trip to visit Golden Gate Bridge in San Francisco for her birthday celebration.",
+            "input_problem": "I need assistance with booking a hotel in San Francisco from June 23, 2024, to June 30, 2024.",
+            "assertions": [
+                "user: User is informed that the reservation for a room at a hotel in San Francisco from June 23 to June 30, 2024, has been successfully booked.",
+                "user: Conversation includes the travel distance from San Francisco International Airport to the Golden Gate Bridge.",
+                "agent: Primary agent gathers the necessary information from the user for the hotel booking before executing the book_hotel action.",
+                "agent: calculate_distance is executed to determine the distance from San Francisco International Airport (37.6213129,-122.3789554) to the Golden Gate Bridge (37.8199,-122.4783)."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to calculate the total cost for a month-long trip, including roughly $700 for 30 nights in hostels, $600 for flights, roughly $500 for a rental car, and $300 for food expenses. \n - User needs to change the pick up date of their car rental reservation to October 23 (confirmation number: 276551).\n\nBackground: * User's name is Kyle Valdez.\n * User's age is 25 years old.\n * User's occupation is Accountant.\n * User's residence is 1 Main Street, Keene, NH 03455.\n * User's monthly income is $1000\n * User's rental confirmation number is 276551 \n * User used \"Valdez\" as last name when booking the rental car",
+            "input_problem": "Can you help give me an estimate of the total cost for a month-long trip? Please include: ~$700 for 30 nights in hostels, $600 for flights, ~$500 for a rental car, and $300 for food expenses.",
+            "assertions": [
+                "user: User is provided with an estimated total cost for a month-long trip, including 30 nights in hostels, costs for flights, rental car, and food expenses.",
+                "user: User is informed that their rental car pick-up is now on October 23.",
+                "agent: An action is executed to update the pick up date to October 23 using 276551 as confirmation number and Valdez as last name."
+            ]
+        },
+        {
+            "scenario": "Goals: User needs to learn how to dance Bachata \n\nBackground: * User's name is John Kelly\n * User's age is 38\n * User's occupation is a Professor",
+            "input_problem": "Hello, can you show me how to dance Bachata?",
+            "assertions": [
+                "user: Conversation does not include how to dance Bachata.",
+                "agent: Primary agent does not show how to dance Bachata."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to search for the event \"Impressionist Painting Workshop\" from July 1-3, 2025 at the SoHo Art Center. \n - User needs to foward the invidation to their friend Flora Smith.\n\nBackground: * User's Name is Roxanne Marasigan\n * User's Online Handle is @roxlovesart\n * User's Age is 20\n * User's Occupation is Undergraduate student at the University of New York\n * User resides in New York, USA\n * User's Travel Frequency is that despite her busy schedule as a student, Roxanne occasionally travels within the USA for personal and academic purposes\n * User's Regular Activities involve having a deep passion for painting and all forms of artistic expression. She finds inspiration for her artwork by frequently visiting museums and attending local art events",
+            "input_problem": "I need assistance searching the event \"Impressionist Painting Workshop\" from July 1-3, 2025 at the SoHo Art Center and sending it to my friend Flora Smith.",
+            "assertions": [
+                "user: Conversation includes art exhibition and workshops in New York City.",
+                "agent: Primary agent does not forward the invite to the user's friend, Flora Smith.",
+                "user: Conversation does not include confirmation for forwarding invite to friend, Flora Smith."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to book a rental car for a weekend trip from Los Angeles to San Francisco on August 10th, 2025 around 10:00 AM and drop it off on August 12th, 2025 around 5:00 PM, picking up at Los Angeles International Airport and dropping off at San Francisco International Airport, for a Toyota Camry, with Michael Smith as the driver, michael.smith@gmail.com, date of birth 05/15/1985, driver's license number CA483322, issued by the state of California.\n - User needs to know the weather forecast for San Francisco, CA, for the next 3 days (August 10th, 2025 to August 12th, 2025).\n - User needs recommendations for local events happening in San Francisco during the weekend trip.\n\nBackground: * User's name is Michael Smith\n * User's email is michael.smith@gmail.com\n * User's date of birth is 05/15/1985\n * User's preferred car is a Toyota Camry\n * User's driver's license number is CA5678901, issued by the state of California\n * User's age is 38\n * User's occupation is Marketing Consultant\n * User resides in Los Angeles, CA\n * User's travel history includes being a regular traveler within California\n * User's trip dates are August 10-12\n * User's preferences involve being interested in cultural events and outdoor activities",
+            "input_problem": "I need help with renting a car for a weekend trip to San Francisco to and I also need help in checking the weather forecast for San Francisco for the next 3 days. Could you assist with that?\n",
+            "assertions": [
+                "user: User is informed that the rental car has been booked for pickup at LAX on August 10, 2025 and drop off in San Francisco on August 12, 2025.",
+                "user: User is informed of cultural events and outdoor activities in San Francisco during the weekend trip from August 10-12, 2025.",
+                "user: Conversation indicates that weather information for San Francisco has been provided.",
+                "agent: Primary agent gathers the user's full name and preferred car type before booking the rental car for pick up at LAX on August 10th and drop-off in San Francisco on August 12th, 2025.",
+                "agent: search_events is executed to get recommendations for local events in San Francisco."
+            ]
+        },
+        {
+            "scenario": "Goals: \u2022 User needs to book a economy flight from Atlanta, GA (ATL) to Daniel K. Inouye International Airport (HNL) departing on June 15, 2024. \n \u2022 User needs to book a standard hotel room for one person at a hotel in Honolulu, Hawaii, from June 15, 2024, to June 20, 2024.\n \u2022 User needs to obtain the total cost of their trip, including the flight and hotel costs and $500 for meals.\n\nBackground: * User's name is Shawn Cassin.\n * User's age is 26 years old.\n * User's occupation is Software Engineer.\n * User resides in Calhoun, Georgia.\n * User's hobbies are visiting beaches and exploring new things.\n * User's vacation plan is to go to Honolulu, Hawaii, and they need help with booking a flight, securing hotel accommodation, and also budgeting.",
+            "input_problem": "I'm looking to explore a destination away from home, possibly in Hawaii. I need assistance with booking a flight and also securing hotel accommodation.",
+            "assertions": [
+                "user: User is informed of the successful booking of their flight to Hawaii from Atlanta, GA (ATL) to Daniel K. Inouye International Airport (HNL) departing on June 15, 2024.",
+                "user: User is informed of the booking of a standard hotel room for one person at a hotel in Honolulu, Hawaii, from June 15, 2024, to June 20, 2024.",
+                "user: User is informed about the total cost of their trip, including the flight and hotel costs and $500 for meals.",
+                "agent: search_flight is triggered to find flight options to Hawaii from Atlanta, GA (ATL) to Daniel K. Inouye International Airport (HNL) departing on June 15, 2024.",
+                "agent: book_hotel is executed to reserve a standard hotel room for one person at a hotel in Honolulu, Hawaii, from June 15, 2024, to June 20, 2024."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to complete check-in for the Global Entrepreneurship Summit conference at the Midpen Media Center in Palo Alto, California on July 24, 2025, with order ID 75232 and email patricksmith@email.com.\n - User needs to secure an SUV rental, picking up the vehicle at Reno-Tahoe International Airport on July 25, 2025, and returning it to the same location on July 26, 2025. The driver's license number is 214356234, issued by the state of California.\n\nBackground: * User's name is User Smith\n * User's date of birth is January 29, 1990\n * User has upcoming plans to attend entrepreneurship events in Palo Alto, California and Reno, Nevada\n * User's email address is Usersmith@email.com\n * User's phone number is (843) 555-1010\n * User's license number is 214356234\n * User's license is issued by the state of California\n * The rental pickup date is July 25, 2025\n * The rental drop-off date is July 26, 2025\n * The pickup and drop-off location is Reno-Tahoe International Airport (RNO)\n * User's preferred rental vehicle is an SUV",
+            "input_problem": "Hi, I\u2019ve just arrived at the Midpen Media Center for the Global Entrepreneurship Summit. Please assist me with checking in for the event using order ID 1234. I am registered under the email patricksmith@email.com.",
+            "assertions": [
+                "user: User is informed that the agent cannot help with a conference check-in for Global Entrepreneurship Summit.",
+                "user: User is informed about SUV reservation, pickup at Reno-Tahoe International Airport on July 25, 2025, drop off on July 26, 2025. Driver's license 214356234, issued by California.",
+                "agent: create_reservation is executed to book a SUV, pickup at Reno-Tahoe International Airport on July 25, 2025, drop off on July 26, 2025. Driver's license 214356234, issued by California."
+            ]
+        },
+        {
+            "scenario": "Goals: - User needs to book a queen room at the City Suites Hotel (ID 7344277) in Chicago, Illinois, from August 20, 2024, to August 24, 2024.\n - User needs to discover nearby restaurants in the City Suites Hotel in Chicago that offer Asian cuisine.\n\nBackground: * User's name is Patricia Swift\n * User's age is 27\n * User's occupation is Baker\n * User resides in Milwaukee, Wisconsin\n * User has upcoming travel to Chicago, Illinois\n * User's travel dates are August 20\u201324, 2024\n * User's travel planning style is meticulous and well-prepared\n * User's travel purpose is expanding skills in baking\n * User's travel interest is to book a queen room at the City Suites Hotel (ID 7344277) in Chicago and explore nearby Asian cuisine restaurants",
+            "input_problem": "Please assist me in booking a queen room at City Suites Hotel (ID 7344277) in Chicago for my trip from August 20, 2024, to August 24, 2024.",
+            "assertions": [
+                "user: Conversation includes the confirmation of booking a queen room at the City Suites Hotel (ID 7344277) in Chicago from August 20 to 24.",
+                "user: Conversation includes restaurants near the user's hotel in Chicago that offer Asian cuisine.",
+                "agent: book_hotel is triggered to successfully book a queen room at the City Suites Hotel (ID 7344277) in Chicago from August 20 to 24, 2024, matching Patricia's preferences.",
+                "agent: primary agent provides restaurants near the City Suites Hotel in Chicago that offer Asian cuisine.",
+                "agent: searchrestaurants is executed to retrieve restaurants near the City Suites Hotel in Chicago that offer Asian cuisine."
+            ]
+        }
+    ]
+}
