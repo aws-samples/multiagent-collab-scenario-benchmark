@@ -1,0 +1,2450 @@
+{
+    "agents": [
+        {
+            "agent_id": "mortgage_agent",
+            "agent_name": "mortgage_agent",
+            "agent_instruction": "You are an agent that helps user with requests related to mortgage loan applications. This includes retrieving information on local real estate market, reviewing user's payroll, or background checks on user's credit and assets. You are to call on other agents to complete these task. You also have access to mortgage loan application tools to help submit or get status on applications. Reject any requests that are outside of mortgage financing.",
+            "tools": [
+                {
+                    "tool_name": "MortgageLoans",
+                    "name": "MortgageLoans",
+                    "description": "Tools for submitting mortgage loan applications",
+                    "actions": [
+                        {
+                            "name": "submitloanapplication",
+                            "description": "Submit application for mortgage loans.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "name": {
+                                        "data_type": "string",
+                                        "title": "name",
+                                        "description": "Applicant's name",
+                                        "required": []
+                                    },
+                                    "email": {
+                                        "data_type": "string",
+                                        "title": "email",
+                                        "description": "Applicant's email address",
+                                        "required": []
+                                    },
+                                    "income": {
+                                        "data_type": "string",
+                                        "title": "income",
+                                        "description": "Annual income",
+                                        "required": []
+                                    },
+                                    "credit_score": {
+                                        "data_type": "integer",
+                                        "title": "credit_score",
+                                        "description": "Credit score",
+                                        "required": []
+                                    },
+                                    "loan_amount": {
+                                        "data_type": "number",
+                                        "title": "loan_amount",
+                                        "description": "Requested loan amount",
+                                        "required": []
+                                    },
+                                    "loan_type": {
+                                        "data_type": "string",
+                                        "title": "loan_type",
+                                        "description": "Type of loan the applicant is applying for (e.g., Fixed, Adjustable, Interest-Only)",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "income",
+                                    "credit_score",
+                                    "loan_amount",
+                                    "loan_type"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "application_id": {
+                                        "data_type": "string",
+                                        "title": "application_id",
+                                        "description": "The status of the application after submission.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "application_id"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "getloanstatus",
+                            "description": "Get status on mortgage loan application.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "application_id": {
+                                        "data_type": "string",
+                                        "title": "application_id",
+                                        "description": "The unique identifier for the application.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "application_id"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "application_status": {
+                                        "data_type": "string",
+                                        "title": "application_status",
+                                        "description": "The current status of the application.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "application_status"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": [
+                {
+                    "scenario": "Trigger this agent to search for real estate listings, data on neighborhood, and to calculate property value.",
+                    "agent_id": "property_agent",
+                    "context_sharing": true
+                },
+                {
+                    "scenario": "Trigger this agent to obtain credit report of user. You will need the user's user ID.",
+                    "agent_id": "credit_agent",
+                    "context_sharing": true
+                },
+                {
+                    "scenario": "Trigger this agent to get information about user's income. You must provide the user's employee ID as well as the start and end dates of the pay period for which you are requesting the information.",
+                    "agent_id": "income_agent",
+                    "context_sharing": true
+                },
+                {
+                    "scenario": "Trigger this agent to calculate user's potential monthly mortgage payments.",
+                    "agent_id": "payment_agent",
+                    "context_sharing": true
+                },
+                {
+                    "scenario": "Trigger this agent to calculate closing costs for a home.",
+                    "agent_id": "closing_agent",
+                    "context_sharing": true
+                }
+            ]
+        },
+        {
+            "agent_id": "property_agent",
+            "agent_name": "property_agent",
+            "agent_instruction": "You are an agent that provides valuable insights into the local real estate market, property values, and homebuying process.",
+            "tools": [
+                {
+                    "tool_name": "LocationService",
+                    "name": "LocationService",
+                    "description": "Supports geocoding (looking up locations/places), reverse-geocoding (getting nearby locations for given coordinates), and routing (getting distance between locations).",
+                    "actions": [
+                        {
+                            "name": "searchbycoordinates",
+                            "description": "Conducts a search for places near particular coordinates.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "coordinates": {
+                                        "data_type": "string",
+                                        "title": "coordinates",
+                                        "description": "Coordinates in latitude and longitude of the location (comma-separated, e.g. 40.7484,73.9857).",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "coordinates"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "places": {
+                                        "data_type": "array",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "label": {
+                                                    "data_type": "string",
+                                                    "description": "Place label",
+                                                    "required": []
+                                                },
+                                                "categories": {
+                                                    "data_type": "array",
+                                                    "description": "Place categories",
+                                                    "required": [],
+                                                    "items": {
+                                                        "data_type": "string",
+                                                        "required": []
+                                                    }
+                                                },
+                                                "street_number": {
+                                                    "data_type": "string",
+                                                    "description": "Place street number",
+                                                    "required": []
+                                                },
+                                                "street": {
+                                                    "data_type": "string",
+                                                    "description": "Place street",
+                                                    "required": []
+                                                },
+                                                "city": {
+                                                    "data_type": "string",
+                                                    "description": "Place city",
+                                                    "required": []
+                                                },
+                                                "region": {
+                                                    "data_type": "string",
+                                                    "description": "Place region",
+                                                    "required": []
+                                                },
+                                                "postal_code": {
+                                                    "data_type": "string",
+                                                    "description": "Place postal code",
+                                                    "required": []
+                                                },
+                                                "country": {
+                                                    "data_type": "string",
+                                                    "description": "Place country",
+                                                    "required": []
+                                                },
+                                                "timezone": {
+                                                    "data_type": "string",
+                                                    "description": "Place timezone",
+                                                    "required": []
+                                                },
+                                                "coordinates": {
+                                                    "data_type": "array",
+                                                    "description": "Place coordinates",
+                                                    "required": [],
+                                                    "items": {
+                                                        "data_type": "number",
+                                                        "required": []
+                                                    }
+                                                },
+                                                "hours": {
+                                                    "data_type": "string",
+                                                    "description": "Place hours of operation",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "categories",
+                                                "coordinates",
+                                                "country",
+                                                "label",
+                                                "postal_code",
+                                                "region",
+                                                "timezone"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "places"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "searchbytext",
+                            "description": "Search for places (geocoding) with freeform text (address, name, city, or region). The search can be narrowed by specifying categories, or nearby coordinates.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "text": {
+                                        "data_type": "string",
+                                        "title": "text",
+                                        "description": "Search text used to suggest places, such as addresses, cities, places of interest, or regions.",
+                                        "required": []
+                                    },
+                                    "coordinates": {
+                                        "data_type": "string",
+                                        "title": "coordinates",
+                                        "description": "Comma-separated coordinates (latitude,longitude) of the location used to bias the search to prefer results closer to a particular position.",
+                                        "required": []
+                                    },
+                                    "categories": {
+                                        "data_type": "string",
+                                        "title": "categories",
+                                        "description": "A comma-separated list of categories used to filter places returned. If multiple categories are provided, the results will match _any_ of the listed categories.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "text"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "places": {
+                                        "data_type": "array",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "label": {
+                                                    "data_type": "string",
+                                                    "required": []
+                                                },
+                                                "categories": {
+                                                    "data_type": "array",
+                                                    "description": "List of location categories",
+                                                    "required": [],
+                                                    "items": {
+                                                        "data_type": "string",
+                                                        "description": "Location category",
+                                                        "required": []
+                                                    }
+                                                },
+                                                "street_number": {
+                                                    "data_type": "string",
+                                                    "description": "Street number",
+                                                    "required": []
+                                                },
+                                                "street": {
+                                                    "data_type": "string",
+                                                    "description": "Street name",
+                                                    "required": []
+                                                },
+                                                "city": {
+                                                    "data_type": "string",
+                                                    "description": "City name",
+                                                    "required": []
+                                                },
+                                                "region": {
+                                                    "data_type": "string",
+                                                    "description": "Region name",
+                                                    "required": []
+                                                },
+                                                "postal_code": {
+                                                    "data_type": "string",
+                                                    "description": "Postal code",
+                                                    "required": []
+                                                },
+                                                "country": {
+                                                    "data_type": "string",
+                                                    "description": "Country",
+                                                    "required": []
+                                                },
+                                                "timezone": {
+                                                    "data_type": "string",
+                                                    "description": "Timezone",
+                                                    "required": []
+                                                },
+                                                "coordinates": {
+                                                    "data_type": "array",
+                                                    "description": "List of coordinates",
+                                                    "required": [],
+                                                    "items": {
+                                                        "data_type": "number",
+                                                        "description": "Latitude and longitude values",
+                                                        "required": []
+                                                    }
+                                                },
+                                                "hours": {
+                                                    "data_type": "string",
+                                                    "description": "List of hours of operation",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "categories",
+                                                "city",
+                                                "coordinates",
+                                                "country",
+                                                "hours",
+                                                "label",
+                                                "postal_code",
+                                                "region",
+                                                "street",
+                                                "street_number",
+                                                "timezone"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "places"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "calculatedistance",
+                            "description": "Calculate the travel distance between an origin and destination location.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "origin": {
+                                        "data_type": "string",
+                                        "title": "origin",
+                                        "description": "Coordinates in latitude and longitude of the origin (comma-separated).",
+                                        "required": []
+                                    },
+                                    "destination": {
+                                        "data_type": "string",
+                                        "title": "destination",
+                                        "description": "Coordinates in latitude and longitude of the destination (comma-separated).",
+                                        "required": []
+                                    },
+                                    "travel_mode": {
+                                        "data_type": "string",
+                                        "title": "travel_mode",
+                                        "description": "The mode of transport used when calculating a route. Either `Car`, `Walking`, or `Bicycle`.",
+                                        "enum": [
+                                            "Car",
+                                            "Walking",
+                                            "Bicycle"
+                                        ],
+                                        "required": []
+                                    },
+                                    "distance_unit": {
+                                        "data_type": "string",
+                                        "title": "distance_unit",
+                                        "description": "The units used when returning the distance, either `Kilometers` or `Miles`",
+                                        "enum": [
+                                            "Kilometers",
+                                            "Miles"
+                                        ],
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "origin",
+                                    "destination"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "summary": {
+                                        "data_type": "object",
+                                        "properties": {
+                                            "distance": {
+                                                "data_type": "number",
+                                                "description": "Travel Distance in desired unit",
+                                                "required": []
+                                            },
+                                            "distance_unit": {
+                                                "data_type": "string",
+                                                "description": "Travel Distance unit",
+                                                "required": []
+                                            },
+                                            "duration_minutes": {
+                                                "data_type": "integer",
+                                                "description": "Travel duration in minutes",
+                                                "required": []
+                                            }
+                                        },
+                                        "required": [
+                                            "distance",
+                                            "distance_unit",
+                                            "duration_minutes"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "summary"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "getcurrentcoordinates",
+                            "description": "Returns the latitude and longitude for the current device.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {},
+                                "required": []
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "coordinates": {
+                                        "data_type": "array",
+                                        "description": "current longitude and latitude",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "number",
+                                            "required": []
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "coordinates"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                },
+                {
+                    "tool_name": "RealEstateManagement",
+                    "name": "RealEstateManagement",
+                    "description": "Tools for helping finding new homes",
+                    "actions": [
+                        {
+                            "name": "searchrealestatelistings",
+                            "description": "Search for real estate listings in local neighborhood.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "city": {
+                                        "data_type": "string",
+                                        "title": "city",
+                                        "description": "The location to search for listings",
+                                        "required": []
+                                    },
+                                    "bedrooms": {
+                                        "data_type": "integer",
+                                        "title": "bedrooms",
+                                        "description": "The number of bedrooms",
+                                        "required": []
+                                    },
+                                    "bathrooms": {
+                                        "data_type": "integer",
+                                        "title": "bathrooms",
+                                        "description": "The number of bathroms",
+                                        "required": []
+                                    },
+                                    "min_price": {
+                                        "data_type": "number",
+                                        "title": "min_price",
+                                        "description": "Minimum price of listing",
+                                        "required": []
+                                    },
+                                    "max_price": {
+                                        "data_type": "number",
+                                        "title": "max_price",
+                                        "description": "Maximum price of listing",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "city",
+                                    "bedrooms",
+                                    "bathrooms"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "listings": {
+                                        "data_type": "array",
+                                        "title": "listings",
+                                        "description": "Output of listings",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "listing_id": {
+                                                    "data_type": "string",
+                                                    "title": "listing_id",
+                                                    "description": "ID of listing",
+                                                    "required": []
+                                                },
+                                                "address": {
+                                                    "data_type": "string",
+                                                    "title": "address",
+                                                    "description": "Address of listing",
+                                                    "required": []
+                                                },
+                                                "price": {
+                                                    "data_type": "number",
+                                                    "title": "price",
+                                                    "description": "Price of listing",
+                                                    "required": []
+                                                },
+                                                "bedrooms": {
+                                                    "data_type": "integer",
+                                                    "title": "bedrooms",
+                                                    "description": "The number of bedrooms for listing",
+                                                    "required": []
+                                                },
+                                                "bathrooms": {
+                                                    "data_type": "integer",
+                                                    "title": "bathrooms",
+                                                    "description": "The number of bathrooms for listing",
+                                                    "required": []
+                                                },
+                                                "square_feet": {
+                                                    "data_type": "integer",
+                                                    "title": "square_feet",
+                                                    "description": "Square feet of property",
+                                                    "required": []
+                                                },
+                                                "year_built": {
+                                                    "data_type": "integer",
+                                                    "title": "year_built",
+                                                    "description": "Year built for property",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "listing_id",
+                                                "address",
+                                                "price",
+                                                "bedrooms",
+                                                "bathrooms",
+                                                "square_feet",
+                                                "year_built"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "listings"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "searchneighborhooddata",
+                            "description": "Search for neighborhood data.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "zipcode": {
+                                        "data_type": "integer",
+                                        "title": "zipcode",
+                                        "description": "ZIP code for which to retrieve data.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "zipcode"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "neighborhoods": {
+                                        "data_type": "array",
+                                        "title": "neighborhoods",
+                                        "description": "Output of\u00a0search_neighborhood_data",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "neighborhood": {
+                                                    "data_type": "string",
+                                                    "title": "neighborhood",
+                                                    "description": "Name of neighborhood",
+                                                    "required": []
+                                                },
+                                                "median_home_value": {
+                                                    "data_type": "number",
+                                                    "title": "median_home_value",
+                                                    "description": "The median home value in the neighborhood.",
+                                                    "required": []
+                                                },
+                                                "crime_rate": {
+                                                    "data_type": "number",
+                                                    "title": "crime_rate",
+                                                    "description": "The crime rate in the neighborhood.",
+                                                    "required": []
+                                                },
+                                                "description": {
+                                                    "data_type": "string",
+                                                    "title": "description",
+                                                    "description": "Description of neighborhood which includes information about nearby amenities (e.g., parks, restaurants, shopping centers).",
+                                                    "required": []
+                                                },
+                                                "population": {
+                                                    "data_type": "number",
+                                                    "title": "population",
+                                                    "description": "Number of inhabitants",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "neighborhood",
+                                                "median_home_value",
+                                                "crime_rate",
+                                                "description"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "neighborhoods"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "calculatepropertyvalue",
+                            "description": "Calculate property value based on neighborhood and property attributes.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "median_home_value": {
+                                        "data_type": "number",
+                                        "title": "median_home_value",
+                                        "description": "The median home value in the neighborhood.",
+                                        "required": []
+                                    },
+                                    "crime_rate": {
+                                        "data_type": "number",
+                                        "title": "crime_rate",
+                                        "description": "The crime rate in the neighborhood.",
+                                        "required": []
+                                    },
+                                    "neighborhood_description": {
+                                        "data_type": "string",
+                                        "title": "neighborhood_description",
+                                        "description": "Description of neighborhood",
+                                        "required": []
+                                    },
+                                    "address": {
+                                        "data_type": "string",
+                                        "title": "address",
+                                        "description": "Address of listing",
+                                        "required": []
+                                    },
+                                    "bedrooms": {
+                                        "data_type": "integer",
+                                        "title": "bedrooms",
+                                        "description": "The number of bedrooms for listing",
+                                        "required": []
+                                    },
+                                    "bathrooms": {
+                                        "data_type": "integer",
+                                        "title": "bathrooms",
+                                        "description": "The number of bathrooms for listing",
+                                        "required": []
+                                    },
+                                    "square_feet": {
+                                        "data_type": "integer",
+                                        "title": "square_feet",
+                                        "description": "The square footage of the property.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "median_home_value",
+                                    "crime_rate",
+                                    "neighborhood_description",
+                                    "address",
+                                    "bedrooms",
+                                    "bathrooms",
+                                    "square_feet"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "estimated_value": {
+                                        "data_type": "integer",
+                                        "title": "estimated_value",
+                                        "description": "The estimated market value of the property based on the provided information and neighborhood data.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "estimated_value"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "calculateclosingcost",
+                            "description": "Calculate closing cost based on property value, location, and type of mortgage loan.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "property_value": {
+                                        "data_type": "number",
+                                        "title": "property_value",
+                                        "description": "The estimated market value of the property.",
+                                        "required": []
+                                    },
+                                    "state": {
+                                        "data_type": "string",
+                                        "title": "state",
+                                        "description": "The state where the property is located.",
+                                        "required": []
+                                    },
+                                    "loan_type": {
+                                        "data_type": "string",
+                                        "title": "loan_type",
+                                        "description": "Type of loan the applicant is applying for (e.g., Fixed, Adjustable, Interest-Only)",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "property_value",
+                                    "state",
+                                    "loan_type"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "closing_cost": {
+                                        "data_type": "number",
+                                        "title": "closing_cost",
+                                        "description": "The estimated closing cost based on the property value and location.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "closing_cost"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": []
+        },
+        {
+            "agent_id": "credit_agent",
+            "agent_name": "credit_agent",
+            "agent_instruction": "You are an agent that obtains the user's credit score from a reliable source and generates their credit report.",
+            "tools": [
+                {
+                    "tool_name": "Banking",
+                    "name": "Banking",
+                    "description": "This tool let's you manage your bank account.",
+                    "actions": [
+                        {
+                            "name": "listaccounts",
+                            "description": "The list of all accounts of the user that is logged.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {},
+                                "required": []
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "accounts": {
+                                        "data_type": "array",
+                                        "description": "The list of user accounts.",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "routing_number": {
+                                                    "data_type": "string",
+                                                    "description": "routing number of the account.",
+                                                    "required": []
+                                                },
+                                                "account_number": {
+                                                    "data_type": "string",
+                                                    "description": "User account number.",
+                                                    "required": []
+                                                },
+                                                "account_type": {
+                                                    "data_type": "string",
+                                                    "description": "Account type (checking, saving).",
+                                                    "required": []
+                                                },
+                                                "balance": {
+                                                    "data_type": "number",
+                                                    "description": "The balance of the account.",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "account_number",
+                                                "account_type",
+                                                "balance",
+                                                "routing_number"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "accounts"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "checkbalance",
+                            "description": "Check the account balance. Works for all types of account Checking, Savings, Credit.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "account_number": {
+                                        "data_type": "string",
+                                        "title": "account_number",
+                                        "description": "Account Number.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "account_number"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "balance": {
+                                        "data_type": "number",
+                                        "description": "The account balance.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "balance"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "listtransactions",
+                            "description": "Lists the most recent transactions in an account.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "account_number": {
+                                        "data_type": "string",
+                                        "title": "account_number",
+                                        "description": "Account Number.",
+                                        "required": []
+                                    },
+                                    "num_transaction": {
+                                        "data_type": "integer",
+                                        "title": "num_transaction",
+                                        "description": "The maximum number of transactions to visualize. If not provided default at 10.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "account_number",
+                                    "num_transaction"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "accounts": {
+                                        "data_type": "array",
+                                        "description": "The list of recent transactions",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "date": {
+                                                    "data_type": "string",
+                                                    "description": "The date of the transaction.",
+                                                    "required": []
+                                                },
+                                                "merchant": {
+                                                    "data_type": "string",
+                                                    "description": "The name of the merchant.",
+                                                    "required": []
+                                                },
+                                                "amount": {
+                                                    "data_type": "number",
+                                                    "description": "The amount of the transaction.",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "amount",
+                                                "date",
+                                                "merchant"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "accounts"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "requestcreditcard",
+                            "description": "Request a new credit card of a specific type.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "card_type": {
+                                        "data_type": "string",
+                                        "title": "card_type",
+                                        "description": "The type of credit card to request.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "card_type"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "message": {
+                                        "data_type": "string",
+                                        "description": "Request message.",
+                                        "required": []
+                                    },
+                                    "suggested_card": {
+                                        "data_type": "string",
+                                        "description": "Suggested card name for user.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "message"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "replacecreditcard",
+                            "description": "Replace a lost credit card.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "account_number": {
+                                        "data_type": "string",
+                                        "title": "account_number",
+                                        "description": "Account Number.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "account_number"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "message": {
+                                        "data_type": "string",
+                                        "required": []
+                                    },
+                                    "card_status": {
+                                        "data_type": "string",
+                                        "description": "The status of the card.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "card_status",
+                                    "message"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "transfer",
+                            "description": "Perform a transfer of funds between accounts.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "account_number": {
+                                        "data_type": "string",
+                                        "title": "account_number",
+                                        "description": "Account Number.",
+                                        "required": []
+                                    },
+                                    "recipient_account_number": {
+                                        "data_type": "string",
+                                        "title": "recipient_account_number",
+                                        "description": "Account Number of the recipient.",
+                                        "required": []
+                                    },
+                                    "recipient_routing_number": {
+                                        "data_type": "string",
+                                        "title": "recipient_routing_number",
+                                        "description": "Routing Number of the recipient account.",
+                                        "required": []
+                                    },
+                                    "recipient_name": {
+                                        "data_type": "string",
+                                        "title": "recipient_name",
+                                        "description": "Recipient Name.",
+                                        "required": []
+                                    },
+                                    "amount": {
+                                        "data_type": "number",
+                                        "title": "amount",
+                                        "description": "Amount",
+                                        "required": []
+                                    },
+                                    "currency": {
+                                        "data_type": "string",
+                                        "title": "currency",
+                                        "description": "The currency of the transfer. If it is not provided it will default to the account currency.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "account_number",
+                                    "recipient_account_number",
+                                    "recipient_routing_number",
+                                    "recipient_name",
+                                    "amount"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "message": {
+                                        "data_type": "string",
+                                        "description": "A message for the transfer.",
+                                        "required": []
+                                    },
+                                    "original_account_balance": {
+                                        "data_type": "number",
+                                        "description": "The original balance of the account.",
+                                        "required": []
+                                    },
+                                    "target_account_balance": {
+                                        "data_type": "number",
+                                        "description": "The target balance of the account.",
+                                        "required": []
+                                    },
+                                    "receipt_number": {
+                                        "data_type": "string",
+                                        "description": "The receipt number of the transfer.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "message",
+                                    "original_account_balance",
+                                    "receipt_number",
+                                    "target_account_balance"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                },
+                {
+                    "tool_name": "CreditReport",
+                    "name": "CreditReport",
+                    "description": "Tools for obtaining user credit reports",
+                    "actions": [
+                        {
+                            "name": "searchcreditreports",
+                            "description": "Search for user's credit reports.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "user_id": {
+                                        "data_type": "string",
+                                        "title": "user_id",
+                                        "description": "The unique identifier for the user",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "user_id"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "credit_reports": {
+                                        "data_type": "array",
+                                        "title": "credit_reports",
+                                        "description": "List of credit reports",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "report_id": {
+                                                    "data_type": "string",
+                                                    "title": "report_id",
+                                                    "description": "ID of credit report",
+                                                    "required": []
+                                                },
+                                                "credit_score": {
+                                                    "data_type": "integer",
+                                                    "title": "credit_score",
+                                                    "description": "Credit score in the report",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "report_id",
+                                                "credit_score"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "credit_reports"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "describescoreranges",
+                            "description": "Explain credit score.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "credit_score": {
+                                        "data_type": "integer",
+                                        "title": "credit_score",
+                                        "description": "The credit score to describe",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "credit_score"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "score_range": {
+                                        "data_type": "string",
+                                        "title": "score_range",
+                                        "description": "The range in which the credit score falls",
+                                        "required": []
+                                    },
+                                    "score_description": {
+                                        "data_type": "string",
+                                        "title": "score_description",
+                                        "description": "Description of what the score range means",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "score_range",
+                                    "score_description"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": []
+        },
+        {
+            "agent_id": "income_agent",
+            "agent_name": "income_agent",
+            "agent_instruction": "You are an agent that obtains information about user's income.",
+            "tools": [
+                {
+                    "tool_name": "Calculator",
+                    "name": "Calculator",
+                    "description": "A tool for mathematical computations.",
+                    "actions": [
+                        {
+                            "name": "calculate",
+                            "description": "Resolving a mathematical expression (written in Python syntax)\"",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "expression": {
+                                        "data_type": "string",
+                                        "title": "expression",
+                                        "description": "Expression to resolve (Python code)",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "expression"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "result": {
+                                        "data_type": "integer",
+                                        "description": "The result of expression evaluation",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "result"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "convert",
+                            "description": "An API for measurement unit conversion. For each measurement class, you can convert from/to these units:'\n\n-area: in ** 2, m ** 2, mi ** 2, meter ** 2, centimeter ** 2, yard ** 2, cm ** 2, ha, acre, ft ** 2, foot ** 2, km ** 2, yd ** 2, kilometer ** 2, inch ** 2, mile ** 2, hectare;\n\n-digital: kilobit, gigabit, Gbit, TB, kbit, B, terabyte, megabit, megabyte, kB, GB, bit, kilobyte, gigabyte, terabit, byte, Tbit;\n\n-energy: kilocalorie, kWh, Cal, dietary_calorie, kJ, calorie, kilowatt_hour, kcal, cal, J, joule, kilojoule;\n\n-frequency: Hz, hertz, GHz, gigahertz, megahertz, kHz, kilohertz;\n\n-length: pc, mile_scandinavian, meter, m, micrometer, yard, pm, centimeter, au, picometer, ly, light_year, cm, mi, ft, decimeter, dm, yd, inch, parsec, mile, millimeter, nanometer, foot, kilometer, \u00b5m, mm, in, nautical_mile, astronomical_unit, nmi, nm, km;\n\n-mass: \u00b5g, t, metric_ton, gram, kilogram, g, mg, ct, microgram, ton, milligram, kg, ounce, pound, lb, oz, carat, troy ounce;\n\n-angle: degree, deg, radian, arcminute, revolution, rad, arcsec, arcsecond, arcmin;\n\n-speed: mi / h, kilometer / hour, mile / hour, m / s, meter / second, kt, km / h, knot;\n\n-acceleration: m / s ** 2, meter / second ** 2, g_0, gravity;\n\n-pressure: inHg, mmHg, psi, pound_force_per_square_inch, hectopascal, millimeter_Hg, mbar, inch_Hg, hPa, millibar;\n\n-temperature: celsius, K, kelvin, \u00b0F, fahrenheit, \u00b0C;\n\n-duration: s, ms, month, week, year, min, hour, century, ns, nanosecond, a, d, day, minute, h, millisecond, microsecond, \u00b5s, second;\n\n-volume: kilometer ** 3, inch ** 3, deciliter, in ** 3, tbsp, cp, mi ** 3, floz, pint, mile ** 3, pt, yd ** 3, quart, tsp, l, centiliter, meter ** 3, metric_cup, hl, tablespoon, foot ** 3, megaliter, cl, acre_foot, yard ** 3, teaspoon, gallon, milliliter, m ** 3, centimeter ** 3, qt, km ** 3, fluid_ounce, cm ** 3, gal, hectoliter, dl, liter, ml, cup, ft ** 3;\n\n-consumption: mi / gal, mile / gallon, liter / kilometer, l / km, liter_per_100kilometers;\n\n-power: kW, milliwatt, megawatt, mW, watt, W, horsepower, kilowatt, hp.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "value": {
+                                        "data_type": "number",
+                                        "title": "value",
+                                        "description": "Numeric to convert",
+                                        "required": []
+                                    },
+                                    "unit_from": {
+                                        "data_type": "string",
+                                        "title": "unit_from",
+                                        "description": "Unit from which to convert",
+                                        "required": []
+                                    },
+                                    "unit_to": {
+                                        "data_type": "string",
+                                        "title": "unit_to",
+                                        "description": "Unit to convert into",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "value",
+                                    "unit_from",
+                                    "unit_to"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "result": {
+                                        "data_type": "number",
+                                        "description": "The result of conversion from input to output units.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "result"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "generaterandomnumber",
+                            "description": "Generate a random integer in some range (default: 0 - 1000)",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "min": {
+                                        "data_type": "integer",
+                                        "title": "min",
+                                        "description": "Minimum value in range",
+                                        "required": []
+                                    },
+                                    "max": {
+                                        "data_type": "integer",
+                                        "title": "max",
+                                        "description": "Maximum value in range",
+                                        "required": []
+                                    }
+                                },
+                                "required": []
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "result": {
+                                        "data_type": "integer",
+                                        "description": "A random number in the specified range.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "result"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                },
+                {
+                    "tool_name": "HRPayrollBenefits",
+                    "name": "HRPayrollBenefits",
+                    "description": "Look up payroll and benefits information.",
+                    "actions": [
+                        {
+                            "name": "payroll",
+                            "description": "Get payroll information for a particular employee.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "employee_id": {
+                                        "data_type": "string",
+                                        "title": "employee_id",
+                                        "description": "The ID of the employee for retrieving payroll information",
+                                        "required": []
+                                    },
+                                    "period_start": {
+                                        "data_type": "string",
+                                        "title": "period_start",
+                                        "description": "Return pay statements for pay periods starting on or after this date.",
+                                        "required": []
+                                    },
+                                    "period_end": {
+                                        "data_type": "string",
+                                        "title": "period_end",
+                                        "description": "Return pay statements for pay periods ending on or before this date.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "employee_id"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "results": {
+                                        "data_type": "array",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "employee_id": {
+                                                    "data_type": "string",
+                                                    "description": "Employee ID",
+                                                    "required": []
+                                                },
+                                                "gross_pay": {
+                                                    "data_type": "number",
+                                                    "description": "Gross pay",
+                                                    "required": []
+                                                },
+                                                "net_pay": {
+                                                    "data_type": "number",
+                                                    "description": "Net pay",
+                                                    "required": []
+                                                },
+                                                "period_start": {
+                                                    "data_type": "string",
+                                                    "description": "Start of the period",
+                                                    "required": []
+                                                },
+                                                "period_end": {
+                                                    "data_type": "string",
+                                                    "description": "End of the period",
+                                                    "required": []
+                                                },
+                                                "pay_date": {
+                                                    "data_type": "string",
+                                                    "description": "Date of payment",
+                                                    "required": []
+                                                },
+                                                "salary": {
+                                                    "data_type": "number",
+                                                    "description": "Salary",
+                                                    "required": []
+                                                },
+                                                "overtime": {
+                                                    "data_type": "number",
+                                                    "description": "Overtime hours",
+                                                    "required": []
+                                                },
+                                                "deductions": {
+                                                    "data_type": "array",
+                                                    "description": "Deductions",
+                                                    "required": [],
+                                                    "items": {
+                                                        "data_type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "data_type": "string",
+                                                                "description": "Deductions name",
+                                                                "required": []
+                                                            },
+                                                            "deduction": {
+                                                                "data_type": "integer",
+                                                                "description": "Deductions amount",
+                                                                "required": []
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "deduction",
+                                                            "name"
+                                                        ]
+                                                    }
+                                                },
+                                                "taxes": {
+                                                    "data_type": "array",
+                                                    "description": "Taxes",
+                                                    "required": [],
+                                                    "items": {
+                                                        "data_type": "object",
+                                                        "properties": {
+                                                            "name": {
+                                                                "data_type": "string",
+                                                                "description": "Taxes name",
+                                                                "required": []
+                                                            },
+                                                            "amount": {
+                                                                "data_type": "integer",
+                                                                "description": "Taxes amount",
+                                                                "required": []
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "amount",
+                                                            "name"
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "deductions",
+                                                "employee_id",
+                                                "gross_pay",
+                                                "net_pay",
+                                                "overtime",
+                                                "pay_date",
+                                                "period_end",
+                                                "period_start",
+                                                "salary",
+                                                "taxes"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "results"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "beneficiaries",
+                            "description": "Returns a list of beneficiaries for a particular employee.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "employee_id": {
+                                        "data_type": "string",
+                                        "title": "employee_id",
+                                        "description": "The ID of the employee to retrieve benefits for",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "employee_id"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "results": {
+                                        "data_type": "array",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "employee_id": {
+                                                    "data_type": "string",
+                                                    "description": "Employee id.",
+                                                    "required": []
+                                                },
+                                                "beneficiary_id": {
+                                                    "data_type": "string",
+                                                    "description": "Beneficiary id.",
+                                                    "required": []
+                                                },
+                                                "first_name": {
+                                                    "data_type": "string",
+                                                    "description": "Beneficiary first name.",
+                                                    "required": []
+                                                },
+                                                "last_name": {
+                                                    "data_type": "string",
+                                                    "description": "Beneficiary last name.",
+                                                    "required": []
+                                                },
+                                                "birth_date": {
+                                                    "data_type": "string",
+                                                    "description": "Beneficiary date of birth.",
+                                                    "required": []
+                                                },
+                                                "relationship": {
+                                                    "data_type": "string",
+                                                    "description": "Beneficiary relationship with employee.",
+                                                    "required": []
+                                                },
+                                                "allocation": {
+                                                    "data_type": "integer",
+                                                    "description": "The allocation amount.",
+                                                    "required": []
+                                                },
+                                                "phone_number": {
+                                                    "data_type": "string",
+                                                    "description": "Beneficiary contact number.",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "allocation",
+                                                "beneficiary_id",
+                                                "birth_date",
+                                                "employee_id",
+                                                "first_name",
+                                                "last_name",
+                                                "relationship"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "results"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "updatebeneficiary",
+                            "description": "Updates details about a particular beneficiary.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "beneficiary_id": {
+                                        "data_type": "string",
+                                        "title": "beneficiary_id",
+                                        "description": "The ID of the beneficiary to update",
+                                        "required": []
+                                    },
+                                    "relationship": {
+                                        "data_type": "string",
+                                        "title": "relationship",
+                                        "description": "The relationship of the beneficiary (one of `spouse`, `child`, `parent`, `domestic partner`, `relative`, `friend` or `other`",
+                                        "required": []
+                                    },
+                                    "phone_number": {
+                                        "data_type": "string",
+                                        "title": "phone_number",
+                                        "description": "The contact phone number of the beneficiary.",
+                                        "required": []
+                                    },
+                                    "allocation": {
+                                        "data_type": "integer",
+                                        "title": "allocation",
+                                        "description": "Percentage allocation, between 1 and 100 (set to 0 to remove the beneficiary).",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "beneficiary_id"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "message": {
+                                        "data_type": "string",
+                                        "description": "A message for updating details",
+                                        "required": []
+                                    },
+                                    "remaining_allocation": {
+                                        "data_type": "integer",
+                                        "description": "A remaining allocation",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "message",
+                                    "remaining_allocation"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "benefits",
+                            "description": "Return a list of benefits associated with a particular employee.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "employee_id": {
+                                        "data_type": "string",
+                                        "title": "employee_id",
+                                        "description": "The ID of the employee to retrieve benefits for",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "employee_id"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "results": {
+                                        "data_type": "array",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "employee_id": {
+                                                    "data_type": "string",
+                                                    "description": "employee id",
+                                                    "required": []
+                                                },
+                                                "provider_name": {
+                                                    "data_type": "string",
+                                                    "description": "A provider name",
+                                                    "required": []
+                                                },
+                                                "benefit_type": {
+                                                    "data_type": "string",
+                                                    "description": "benefit type",
+                                                    "required": []
+                                                },
+                                                "employee_contribution": {
+                                                    "data_type": "number",
+                                                    "description": "employee contribution",
+                                                    "required": []
+                                                },
+                                                "company_contribution": {
+                                                    "data_type": "number",
+                                                    "description": "company contribution",
+                                                    "required": []
+                                                },
+                                                "start_date": {
+                                                    "data_type": "string",
+                                                    "description": "start date of the benefit",
+                                                    "required": []
+                                                },
+                                                "end_date": {
+                                                    "data_type": "string",
+                                                    "description": "end date of the benefit",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "benefit_type",
+                                                "company_contribution",
+                                                "employee_contribution",
+                                                "employee_id",
+                                                "provider_name",
+                                                "start_date"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "results"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": []
+        },
+        {
+            "agent_id": "payment_agent",
+            "agent_name": "payment_agent",
+            "agent_instruction": "You are an agent that helps users calculate their potential monthly mortgage payments. You will need to take into account the home price, down payment, loan term, and interest rate.",
+            "tools": [
+                {
+                    "tool_name": "Calculator",
+                    "name": "Calculator",
+                    "description": "A tool for mathematical computations.",
+                    "actions": [
+                        {
+                            "name": "calculate",
+                            "description": "Resolving a mathematical expression (written in Python syntax)\"",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "expression": {
+                                        "data_type": "string",
+                                        "title": "expression",
+                                        "description": "Expression to resolve (Python code)",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "expression"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "result": {
+                                        "data_type": "integer",
+                                        "description": "The result of expression evaluation",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "result"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "convert",
+                            "description": "An API for measurement unit conversion. For each measurement class, you can convert from/to these units:'\n\n-area: in ** 2, m ** 2, mi ** 2, meter ** 2, centimeter ** 2, yard ** 2, cm ** 2, ha, acre, ft ** 2, foot ** 2, km ** 2, yd ** 2, kilometer ** 2, inch ** 2, mile ** 2, hectare;\n\n-digital: kilobit, gigabit, Gbit, TB, kbit, B, terabyte, megabit, megabyte, kB, GB, bit, kilobyte, gigabyte, terabit, byte, Tbit;\n\n-energy: kilocalorie, kWh, Cal, dietary_calorie, kJ, calorie, kilowatt_hour, kcal, cal, J, joule, kilojoule;\n\n-frequency: Hz, hertz, GHz, gigahertz, megahertz, kHz, kilohertz;\n\n-length: pc, mile_scandinavian, meter, m, micrometer, yard, pm, centimeter, au, picometer, ly, light_year, cm, mi, ft, decimeter, dm, yd, inch, parsec, mile, millimeter, nanometer, foot, kilometer, \u00b5m, mm, in, nautical_mile, astronomical_unit, nmi, nm, km;\n\n-mass: \u00b5g, t, metric_ton, gram, kilogram, g, mg, ct, microgram, ton, milligram, kg, ounce, pound, lb, oz, carat, troy ounce;\n\n-angle: degree, deg, radian, arcminute, revolution, rad, arcsec, arcsecond, arcmin;\n\n-speed: mi / h, kilometer / hour, mile / hour, m / s, meter / second, kt, km / h, knot;\n\n-acceleration: m / s ** 2, meter / second ** 2, g_0, gravity;\n\n-pressure: inHg, mmHg, psi, pound_force_per_square_inch, hectopascal, millimeter_Hg, mbar, inch_Hg, hPa, millibar;\n\n-temperature: celsius, K, kelvin, \u00b0F, fahrenheit, \u00b0C;\n\n-duration: s, ms, month, week, year, min, hour, century, ns, nanosecond, a, d, day, minute, h, millisecond, microsecond, \u00b5s, second;\n\n-volume: kilometer ** 3, inch ** 3, deciliter, in ** 3, tbsp, cp, mi ** 3, floz, pint, mile ** 3, pt, yd ** 3, quart, tsp, l, centiliter, meter ** 3, metric_cup, hl, tablespoon, foot ** 3, megaliter, cl, acre_foot, yard ** 3, teaspoon, gallon, milliliter, m ** 3, centimeter ** 3, qt, km ** 3, fluid_ounce, cm ** 3, gal, hectoliter, dl, liter, ml, cup, ft ** 3;\n\n-consumption: mi / gal, mile / gallon, liter / kilometer, l / km, liter_per_100kilometers;\n\n-power: kW, milliwatt, megawatt, mW, watt, W, horsepower, kilowatt, hp.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "value": {
+                                        "data_type": "number",
+                                        "title": "value",
+                                        "description": "Numeric to convert",
+                                        "required": []
+                                    },
+                                    "unit_from": {
+                                        "data_type": "string",
+                                        "title": "unit_from",
+                                        "description": "Unit from which to convert",
+                                        "required": []
+                                    },
+                                    "unit_to": {
+                                        "data_type": "string",
+                                        "title": "unit_to",
+                                        "description": "Unit to convert into",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "value",
+                                    "unit_from",
+                                    "unit_to"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "result": {
+                                        "data_type": "number",
+                                        "description": "The result of conversion from input to output units.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "result"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "generaterandomnumber",
+                            "description": "Generate a random integer in some range (default: 0 - 1000)",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "min": {
+                                        "data_type": "integer",
+                                        "title": "min",
+                                        "description": "Minimum value in range",
+                                        "required": []
+                                    },
+                                    "max": {
+                                        "data_type": "integer",
+                                        "title": "max",
+                                        "description": "Maximum value in range",
+                                        "required": []
+                                    }
+                                },
+                                "required": []
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "result": {
+                                        "data_type": "integer",
+                                        "description": "A random number in the specified range.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "result"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": []
+        },
+        {
+            "agent_id": "closing_agent",
+            "agent_name": "closing_agent",
+            "agent_instruction": "You are an agent that helps users estimate the closing costs for a home purchase. This includes taking into account the home price and location.",
+            "tools": [
+                {
+                    "tool_name": "Calculator",
+                    "name": "Calculator",
+                    "description": "A tool for mathematical computations.",
+                    "actions": [
+                        {
+                            "name": "calculate",
+                            "description": "Resolving a mathematical expression (written in Python syntax)\"",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "expression": {
+                                        "data_type": "string",
+                                        "title": "expression",
+                                        "description": "Expression to resolve (Python code)",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "expression"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "result": {
+                                        "data_type": "integer",
+                                        "description": "The result of expression evaluation",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "result"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "convert",
+                            "description": "An API for measurement unit conversion. For each measurement class, you can convert from/to these units:'\n\n-area: in ** 2, m ** 2, mi ** 2, meter ** 2, centimeter ** 2, yard ** 2, cm ** 2, ha, acre, ft ** 2, foot ** 2, km ** 2, yd ** 2, kilometer ** 2, inch ** 2, mile ** 2, hectare;\n\n-digital: kilobit, gigabit, Gbit, TB, kbit, B, terabyte, megabit, megabyte, kB, GB, bit, kilobyte, gigabyte, terabit, byte, Tbit;\n\n-energy: kilocalorie, kWh, Cal, dietary_calorie, kJ, calorie, kilowatt_hour, kcal, cal, J, joule, kilojoule;\n\n-frequency: Hz, hertz, GHz, gigahertz, megahertz, kHz, kilohertz;\n\n-length: pc, mile_scandinavian, meter, m, micrometer, yard, pm, centimeter, au, picometer, ly, light_year, cm, mi, ft, decimeter, dm, yd, inch, parsec, mile, millimeter, nanometer, foot, kilometer, \u00b5m, mm, in, nautical_mile, astronomical_unit, nmi, nm, km;\n\n-mass: \u00b5g, t, metric_ton, gram, kilogram, g, mg, ct, microgram, ton, milligram, kg, ounce, pound, lb, oz, carat, troy ounce;\n\n-angle: degree, deg, radian, arcminute, revolution, rad, arcsec, arcsecond, arcmin;\n\n-speed: mi / h, kilometer / hour, mile / hour, m / s, meter / second, kt, km / h, knot;\n\n-acceleration: m / s ** 2, meter / second ** 2, g_0, gravity;\n\n-pressure: inHg, mmHg, psi, pound_force_per_square_inch, hectopascal, millimeter_Hg, mbar, inch_Hg, hPa, millibar;\n\n-temperature: celsius, K, kelvin, \u00b0F, fahrenheit, \u00b0C;\n\n-duration: s, ms, month, week, year, min, hour, century, ns, nanosecond, a, d, day, minute, h, millisecond, microsecond, \u00b5s, second;\n\n-volume: kilometer ** 3, inch ** 3, deciliter, in ** 3, tbsp, cp, mi ** 3, floz, pint, mile ** 3, pt, yd ** 3, quart, tsp, l, centiliter, meter ** 3, metric_cup, hl, tablespoon, foot ** 3, megaliter, cl, acre_foot, yard ** 3, teaspoon, gallon, milliliter, m ** 3, centimeter ** 3, qt, km ** 3, fluid_ounce, cm ** 3, gal, hectoliter, dl, liter, ml, cup, ft ** 3;\n\n-consumption: mi / gal, mile / gallon, liter / kilometer, l / km, liter_per_100kilometers;\n\n-power: kW, milliwatt, megawatt, mW, watt, W, horsepower, kilowatt, hp.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "value": {
+                                        "data_type": "number",
+                                        "title": "value",
+                                        "description": "Numeric to convert",
+                                        "required": []
+                                    },
+                                    "unit_from": {
+                                        "data_type": "string",
+                                        "title": "unit_from",
+                                        "description": "Unit from which to convert",
+                                        "required": []
+                                    },
+                                    "unit_to": {
+                                        "data_type": "string",
+                                        "title": "unit_to",
+                                        "description": "Unit to convert into",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "value",
+                                    "unit_from",
+                                    "unit_to"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "result": {
+                                        "data_type": "number",
+                                        "description": "The result of conversion from input to output units.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "result"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "generaterandomnumber",
+                            "description": "Generate a random integer in some range (default: 0 - 1000)",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "min": {
+                                        "data_type": "integer",
+                                        "title": "min",
+                                        "description": "Minimum value in range",
+                                        "required": []
+                                    },
+                                    "max": {
+                                        "data_type": "integer",
+                                        "title": "max",
+                                        "description": "Maximum value in range",
+                                        "required": []
+                                    }
+                                },
+                                "required": []
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "result": {
+                                        "data_type": "integer",
+                                        "description": "A random number in the specified range.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "result"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                },
+                {
+                    "tool_name": "RealEstateManagement",
+                    "name": "RealEstateManagement",
+                    "description": "Tools for helping finding new homes",
+                    "actions": [
+                        {
+                            "name": "searchrealestatelistings",
+                            "description": "Search for real estate listings in local neighborhood.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "city": {
+                                        "data_type": "string",
+                                        "title": "city",
+                                        "description": "The location to search for listings",
+                                        "required": []
+                                    },
+                                    "bedrooms": {
+                                        "data_type": "integer",
+                                        "title": "bedrooms",
+                                        "description": "The number of bedrooms",
+                                        "required": []
+                                    },
+                                    "bathrooms": {
+                                        "data_type": "integer",
+                                        "title": "bathrooms",
+                                        "description": "The number of bathroms",
+                                        "required": []
+                                    },
+                                    "min_price": {
+                                        "data_type": "number",
+                                        "title": "min_price",
+                                        "description": "Minimum price of listing",
+                                        "required": []
+                                    },
+                                    "max_price": {
+                                        "data_type": "number",
+                                        "title": "max_price",
+                                        "description": "Maximum price of listing",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "city",
+                                    "bedrooms",
+                                    "bathrooms"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "listings": {
+                                        "data_type": "array",
+                                        "title": "listings",
+                                        "description": "Output of listings",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "listing_id": {
+                                                    "data_type": "string",
+                                                    "title": "listing_id",
+                                                    "description": "ID of listing",
+                                                    "required": []
+                                                },
+                                                "address": {
+                                                    "data_type": "string",
+                                                    "title": "address",
+                                                    "description": "Address of listing",
+                                                    "required": []
+                                                },
+                                                "price": {
+                                                    "data_type": "number",
+                                                    "title": "price",
+                                                    "description": "Price of listing",
+                                                    "required": []
+                                                },
+                                                "bedrooms": {
+                                                    "data_type": "integer",
+                                                    "title": "bedrooms",
+                                                    "description": "The number of bedrooms for listing",
+                                                    "required": []
+                                                },
+                                                "bathrooms": {
+                                                    "data_type": "integer",
+                                                    "title": "bathrooms",
+                                                    "description": "The number of bathrooms for listing",
+                                                    "required": []
+                                                },
+                                                "square_feet": {
+                                                    "data_type": "integer",
+                                                    "title": "square_feet",
+                                                    "description": "Square feet of property",
+                                                    "required": []
+                                                },
+                                                "year_built": {
+                                                    "data_type": "integer",
+                                                    "title": "year_built",
+                                                    "description": "Year built for property",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "listing_id",
+                                                "address",
+                                                "price",
+                                                "bedrooms",
+                                                "bathrooms",
+                                                "square_feet",
+                                                "year_built"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "listings"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "searchneighborhooddata",
+                            "description": "Search for neighborhood data.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "zipcode": {
+                                        "data_type": "integer",
+                                        "title": "zipcode",
+                                        "description": "ZIP code for which to retrieve data.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "zipcode"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "200",
+                                "description": "Success response",
+                                "properties": {
+                                    "neighborhoods": {
+                                        "data_type": "array",
+                                        "title": "neighborhoods",
+                                        "description": "Output of\u00a0search_neighborhood_data",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "neighborhood": {
+                                                    "data_type": "string",
+                                                    "title": "neighborhood",
+                                                    "description": "Name of neighborhood",
+                                                    "required": []
+                                                },
+                                                "median_home_value": {
+                                                    "data_type": "number",
+                                                    "title": "median_home_value",
+                                                    "description": "The median home value in the neighborhood.",
+                                                    "required": []
+                                                },
+                                                "crime_rate": {
+                                                    "data_type": "number",
+                                                    "title": "crime_rate",
+                                                    "description": "The crime rate in the neighborhood.",
+                                                    "required": []
+                                                },
+                                                "description": {
+                                                    "data_type": "string",
+                                                    "title": "description",
+                                                    "description": "Description of neighborhood which includes information about nearby amenities (e.g., parks, restaurants, shopping centers).",
+                                                    "required": []
+                                                },
+                                                "population": {
+                                                    "data_type": "number",
+                                                    "title": "population",
+                                                    "description": "Number of inhabitants",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "neighborhood",
+                                                "median_home_value",
+                                                "crime_rate",
+                                                "description"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "neighborhoods"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "calculatepropertyvalue",
+                            "description": "Calculate property value based on neighborhood and property attributes.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "median_home_value": {
+                                        "data_type": "number",
+                                        "title": "median_home_value",
+                                        "description": "The median home value in the neighborhood.",
+                                        "required": []
+                                    },
+                                    "crime_rate": {
+                                        "data_type": "number",
+                                        "title": "crime_rate",
+                                        "description": "The crime rate in the neighborhood.",
+                                        "required": []
+                                    },
+                                    "neighborhood_description": {
+                                        "data_type": "string",
+                                        "title": "neighborhood_description",
+                                        "description": "Description of neighborhood",
+                                        "required": []
+                                    },
+                                    "address": {
+                                        "data_type": "string",
+                                        "title": "address",
+                                        "description": "Address of listing",
+                                        "required": []
+                                    },
+                                    "bedrooms": {
+                                        "data_type": "integer",
+                                        "title": "bedrooms",
+                                        "description": "The number of bedrooms for listing",
+                                        "required": []
+                                    },
+                                    "bathrooms": {
+                                        "data_type": "integer",
+                                        "title": "bathrooms",
+                                        "description": "The number of bathrooms for listing",
+                                        "required": []
+                                    },
+                                    "square_feet": {
+                                        "data_type": "integer",
+                                        "title": "square_feet",
+                                        "description": "The square footage of the property.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "median_home_value",
+                                    "crime_rate",
+                                    "neighborhood_description",
+                                    "address",
+                                    "bedrooms",
+                                    "bathrooms",
+                                    "square_feet"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "estimated_value": {
+                                        "data_type": "integer",
+                                        "title": "estimated_value",
+                                        "description": "The estimated market value of the property based on the provided information and neighborhood data.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "estimated_value"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "calculateclosingcost",
+                            "description": "Calculate closing cost based on property value, location, and type of mortgage loan.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "property_value": {
+                                        "data_type": "number",
+                                        "title": "property_value",
+                                        "description": "The estimated market value of the property.",
+                                        "required": []
+                                    },
+                                    "state": {
+                                        "data_type": "string",
+                                        "title": "state",
+                                        "description": "The state where the property is located.",
+                                        "required": []
+                                    },
+                                    "loan_type": {
+                                        "data_type": "string",
+                                        "title": "loan_type",
+                                        "description": "Type of loan the applicant is applying for (e.g., Fixed, Adjustable, Interest-Only)",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "property_value",
+                                    "state",
+                                    "loan_type"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "closing_cost": {
+                                        "data_type": "number",
+                                        "title": "closing_cost",
+                                        "description": "The estimated closing cost based on the property value and location.",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "closing_cost"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": []
+        }
+    ],
+    "primary_agent_id": "mortgage_agent",
+    "human_id": "User"
+}

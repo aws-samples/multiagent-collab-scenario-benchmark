@@ -97,7 +97,7 @@
                 "user: Conversation does not help with budgeting the user's trip to Tokyo, Japan.",
                 "user: Conversation does not include recommendations of centrally located hotel in Tokyo, Japan, that offers comfortable accommodations.",
                 "user: Conversation does not include whether there is a sushi restaurant in Tokyo, Japan, that offers meals costing between $10 and $20 per person.",
-                "agent: Primary agent rejects the user's request about budgeting a trip from California to Tokyo since the request is out-of-domain.",
+                "agent: Primary agent rejects the user's request about budgeting a trip to Tokyo since the request is out-of-domain.",
                 "agent: Primary agent rejects the user's request to look for a centrally located hotel in Tokyo, Japan, that offers comfortable accommodations since the request is out-of-domain.",
                 "agent: Primary agent rejects the user's request to check if there is a sushi restaurant in Tokyo, Japan, that offers meals costing between $10 and $20 per person since the request is out-of-domain."
             ]

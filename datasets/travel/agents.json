@@ -7,7 +7,7 @@
             "tools": [],
             "reachable_agents": [
                 {
-                    "scenario": "Trigger this agent for weather information. Please include city or location to look up weather.",
+                    "scenario": "Trigger this agent for weather information for the next day. Please include city or location to look up weather. Also mention the date for tomorrow as this agent can only look up weather for tomorrow.",
                     "agent_id": "weather_agent",
                     "context_sharing": true
                 },

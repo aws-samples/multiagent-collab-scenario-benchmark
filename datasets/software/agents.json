@@ -1,0 +1,1019 @@
+{
+    "agents": [
+        {
+            "agent_id": "software_agent",
+            "agent_name": "software_agent",
+            "agent_instruction": "You are an agent that helps user with requests related to software applications. This includes implementing, reviewing, or testing code. You will call upon other agents to execute these tasks. Please make sure that ALL code blocks you share with other agents are enclosed within 3 backquotes markdown (```$CODE$```). Reject any requests that are outside of software development.",
+            "tools": [],
+            "reachable_agents": [
+                {
+                    "scenario": "Trigger this agent to implement code.",
+                    "agent_id": "code_agent",
+                    "context_sharing": true
+                },
+                {
+                    "scenario": "Trigger this agent to write test cases and test code.",
+                    "agent_id": "test_agent",
+                    "context_sharing": true
+                },
+                {
+                    "scenario": "Trigger this agent to review code quality and make sure it follows a set of product requirements.",
+                    "agent_id": "review_agent",
+                    "context_sharing": true
+                },
+                {
+                    "scenario": "Trigger this agent to deploy software to a production environment.",
+                    "agent_id": "deploy_agent",
+                    "context_sharing": true
+                },
+                {
+                    "scenario": "Trigger this agent to write product requirements that will guide the software design or to ask about any software design questions.",
+                    "agent_id": "design_agent",
+                    "context_sharing": true
+                }
+            ]
+        },
+        {
+            "agent_id": "code_agent",
+            "agent_name": "code_agent",
+            "agent_instruction": "You are an agent that will implement the code that has been requested. Always generate the full code.",
+            "tools": [],
+            "reachable_agents": []
+        },
+        {
+            "agent_id": "test_agent",
+            "agent_name": "test_agent",
+            "agent_instruction": "You are an agent that is responsible for testing code by writing test cases based on the product requirements. You will use available tools to run tests and get results. If there are any issues with the code, please report the issue in your response.",
+            "tools": [
+                {
+                    "tool_name": "SoftwareDevelopment",
+                    "name": "SoftwareDevelopment",
+                    "description": "Tools for testing and reviewing software",
+                    "actions": [
+                        {
+                            "name": "runcodetest",
+                            "description": "Run test cases on code files.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "code_files": {
+                                        "data_type": "array",
+                                        "title": "code_files",
+                                        "description": "Code files to be tested",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "file_name": {
+                                                    "data_type": "string",
+                                                    "title": "file_name",
+                                                    "description": "Name of code file",
+                                                    "required": []
+                                                },
+                                                "file_content": {
+                                                    "data_type": "string",
+                                                    "title": "file_content",
+                                                    "description": "Content of code file",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "file_name",
+                                                "file_content"
+                                            ]
+                                        }
+                                    },
+                                    "tests": {
+                                        "data_type": "array",
+                                        "title": "tests",
+                                        "description": "Test cases to be ran",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "test_name": {
+                                                    "data_type": "string",
+                                                    "title": "test_name",
+                                                    "description": "Name of test case",
+                                                    "required": []
+                                                },
+                                                "test_content": {
+                                                    "data_type": "string",
+                                                    "title": "test_content",
+                                                    "description": "Content of test case",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "test_name",
+                                                "test_content"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "code_files",
+                                    "tests"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "test_results": {
+                                        "data_type": "array",
+                                        "title": "test_results",
+                                        "description": "Results of test cases",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "test_name": {
+                                                    "data_type": "string",
+                                                    "title": "test_name",
+                                                    "description": "Name of test case",
+                                                    "required": []
+                                                },
+                                                "test_result": {
+                                                    "data_type": "string",
+                                                    "title": "test_result",
+                                                    "description": "Whether test case passed",
+                                                    "required": []
+                                                },
+                                                "test_log": {
+                                                    "data_type": "string",
+                                                    "title": "test_log",
+                                                    "description": "Log of test case outputs",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "test_name",
+                                                "test_result",
+                                                "test_log"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "test_results"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "checkcodesyntax",
+                            "description": "Check syntax of code.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "language": {
+                                        "data_type": "string",
+                                        "title": "language",
+                                        "description": "Language of code to be tested",
+                                        "required": []
+                                    },
+                                    "code_files": {
+                                        "data_type": "array",
+                                        "title": "code_files",
+                                        "description": "Code files to be tested",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "file_name": {
+                                                    "data_type": "string",
+                                                    "title": "file_name",
+                                                    "description": "Name of code file",
+                                                    "required": []
+                                                },
+                                                "file_content": {
+                                                    "data_type": "string",
+                                                    "title": "file_content",
+                                                    "description": "Content of code file",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "file_name",
+                                                "file_content"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "language",
+                                    "code_files"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "valid": {
+                                        "data_type": "string",
+                                        "title": "valid",
+                                        "description": "Whether the files follow code syntax",
+                                        "required": []
+                                    },
+                                    "errors": {
+                                        "data_type": "array",
+                                        "title": "errors",
+                                        "description": "List of errors",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "string",
+                                            "required": []
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "valid",
+                                    "errors"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": []
+        },
+        {
+            "agent_id": "review_agent",
+            "agent_name": "review_agent",
+            "agent_instruction": "You are an agent that will review the code that has been implemented and ensure that it follows the product requirements. Make sure to check that code follows good standards and practices. If there are any issues with the code, please report the issue in your response.",
+            "tools": [
+                {
+                    "tool_name": "SoftwareDevelopment",
+                    "name": "SoftwareDevelopment",
+                    "description": "Tools for testing and reviewing software",
+                    "actions": [
+                        {
+                            "name": "runcodetest",
+                            "description": "Run test cases on code files.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "code_files": {
+                                        "data_type": "array",
+                                        "title": "code_files",
+                                        "description": "Code files to be tested",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "file_name": {
+                                                    "data_type": "string",
+                                                    "title": "file_name",
+                                                    "description": "Name of code file",
+                                                    "required": []
+                                                },
+                                                "file_content": {
+                                                    "data_type": "string",
+                                                    "title": "file_content",
+                                                    "description": "Content of code file",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "file_name",
+                                                "file_content"
+                                            ]
+                                        }
+                                    },
+                                    "tests": {
+                                        "data_type": "array",
+                                        "title": "tests",
+                                        "description": "Test cases to be ran",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "test_name": {
+                                                    "data_type": "string",
+                                                    "title": "test_name",
+                                                    "description": "Name of test case",
+                                                    "required": []
+                                                },
+                                                "test_content": {
+                                                    "data_type": "string",
+                                                    "title": "test_content",
+                                                    "description": "Content of test case",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "test_name",
+                                                "test_content"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "code_files",
+                                    "tests"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "test_results": {
+                                        "data_type": "array",
+                                        "title": "test_results",
+                                        "description": "Results of test cases",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "test_name": {
+                                                    "data_type": "string",
+                                                    "title": "test_name",
+                                                    "description": "Name of test case",
+                                                    "required": []
+                                                },
+                                                "test_result": {
+                                                    "data_type": "string",
+                                                    "title": "test_result",
+                                                    "description": "Whether test case passed",
+                                                    "required": []
+                                                },
+                                                "test_log": {
+                                                    "data_type": "string",
+                                                    "title": "test_log",
+                                                    "description": "Log of test case outputs",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "test_name",
+                                                "test_result",
+                                                "test_log"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "test_results"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "checkcodesyntax",
+                            "description": "Check syntax of code.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "language": {
+                                        "data_type": "string",
+                                        "title": "language",
+                                        "description": "Language of code to be tested",
+                                        "required": []
+                                    },
+                                    "code_files": {
+                                        "data_type": "array",
+                                        "title": "code_files",
+                                        "description": "Code files to be tested",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {
+                                                "file_name": {
+                                                    "data_type": "string",
+                                                    "title": "file_name",
+                                                    "description": "Name of code file",
+                                                    "required": []
+                                                },
+                                                "file_content": {
+                                                    "data_type": "string",
+                                                    "title": "file_content",
+                                                    "description": "Content of code file",
+                                                    "required": []
+                                                }
+                                            },
+                                            "required": [
+                                                "file_name",
+                                                "file_content"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "language",
+                                    "code_files"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "valid": {
+                                        "data_type": "string",
+                                        "title": "valid",
+                                        "description": "Whether the files follow code syntax",
+                                        "required": []
+                                    },
+                                    "errors": {
+                                        "data_type": "array",
+                                        "title": "errors",
+                                        "description": "List of errors",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "string",
+                                            "required": []
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "valid",
+                                    "errors"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": []
+        },
+        {
+            "agent_id": "deploy_agent",
+            "agent_name": "deploy_agent",
+            "agent_instruction": "You are an agent that ensures code is deployed the code to a production environment. You are to call on other agents to help register infrastructure and applications.",
+            "tools": [],
+            "reachable_agents": [
+                {
+                    "scenario": "Trigger this agent to maintain any infrastructure. The name of the infrastructure, type of infrastructure, number of nodes, size of nodes, and region of the nodes should be provided.",
+                    "agent_id": "infrastructure_agent",
+                    "context_sharing": true
+                },
+                {
+                    "scenario": "Trigger this agent to deploy a software application to a production environment.",
+                    "agent_id": "application_agent",
+                    "context_sharing": true
+                }
+            ]
+        },
+        {
+            "agent_id": "design_agent",
+            "agent_name": "design_agent",
+            "agent_instruction": "You are an agent that is responsible for designing the software that will satisfy the user's request. You will generate a product requirements document that will layout all the requirements for the software product. You will also answer any questions related to software design.",
+            "tools": [],
+            "reachable_agents": []
+        },
+        {
+            "agent_id": "infrastructure_agent",
+            "agent_name": "infrastructure_agent",
+            "agent_instruction": "You are an agent that maintains the infrastructure needed to run the software. You are also responsible for stopping any infrastructure upon request.",
+            "tools": [
+                {
+                    "tool_name": "CodeDeployment",
+                    "name": "CodeDeployment",
+                    "description": "Tools for software application deployment",
+                    "actions": [
+                        {
+                            "name": "registerapplication",
+                            "description": "Register software application.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "name": {
+                                        "data_type": "string",
+                                        "title": "name",
+                                        "description": "Name of the software application",
+                                        "required": []
+                                    },
+                                    "version": {
+                                        "data_type": "string",
+                                        "title": "version",
+                                        "description": "Version ID of the application",
+                                        "required": []
+                                    },
+                                    "dependencies": {
+                                        "data_type": "array",
+                                        "title": "dependencies",
+                                        "description": "List of dependencies needed to run application",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {},
+                                            "required": []
+                                        }
+                                    },
+                                    "code_files": {
+                                        "data_type": "array",
+                                        "title": "code_files",
+                                        "description": "Code files for the application",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {},
+                                            "required": []
+                                        }
+                                    },
+                                    "build_instructions": {
+                                        "data_type": "array",
+                                        "title": "build_instructions",
+                                        "description": "List of instructions or commands required to build the application before deployment",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "string",
+                                            "required": []
+                                        }
+                                    },
+                                    "start_command": {
+                                        "data_type": "string",
+                                        "title": "start_command",
+                                        "description": "Command to start application after it has been deployed",
+                                        "required": []
+                                    },
+                                    "port": {
+                                        "data_type": "integer",
+                                        "title": "port",
+                                        "description": "The port on which the application will be running",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "version",
+                                    "code_files"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "status": {
+                                        "data_type": "string",
+                                        "title": "status",
+                                        "description": "Status of application registration",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "registerinfrastructure",
+                            "description": "Register infrastructure before deploying software.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "name": {
+                                        "data_type": "string",
+                                        "title": "name",
+                                        "description": "Name of the infrastructure",
+                                        "required": []
+                                    },
+                                    "type": {
+                                        "data_type": "string",
+                                        "title": "type",
+                                        "description": "Type of infrastructure",
+                                        "required": []
+                                    },
+                                    "config": {
+                                        "data_type": "object",
+                                        "title": "config",
+                                        "description": "Config for infrastructure",
+                                        "properties": {
+                                            "num_nodes": {
+                                                "data_type": "integer",
+                                                "title": "num_nodes",
+                                                "description": "Number of nodes",
+                                                "required": []
+                                            },
+                                            "node_size": {
+                                                "data_type": "string",
+                                                "title": "node_size",
+                                                "description": "Size of node",
+                                                "required": []
+                                            },
+                                            "region": {
+                                                "data_type": "string",
+                                                "title": "region",
+                                                "description": "Region of node",
+                                                "required": []
+                                            }
+                                        },
+                                        "required": [
+                                            "num_nodes",
+                                            "node_size",
+                                            "region"
+                                        ]
+                                    },
+                                    "provider": {
+                                        "data_type": "string",
+                                        "title": "provider",
+                                        "description": "Cloud provider or platform",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "type",
+                                    "config"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "status": {
+                                        "data_type": "integer",
+                                        "title": "status",
+                                        "description": "Status of registration",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "deleteinfrastructure",
+                            "description": "Delete infrastructure.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "name": {
+                                        "data_type": "string",
+                                        "title": "name",
+                                        "description": "Name of the hardware infrastructure",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "status": {
+                                        "data_type": "integer",
+                                        "title": "status",
+                                        "description": "Status of delete request",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "deployapplication",
+                            "description": "Deploy application on specified hardware.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "app_name": {
+                                        "data_type": "string",
+                                        "title": "app_name",
+                                        "description": "Name of application to deploy",
+                                        "required": []
+                                    },
+                                    "app_version": {
+                                        "data_type": "string",
+                                        "title": "app_version",
+                                        "description": "Version of application to deploy",
+                                        "required": []
+                                    },
+                                    "infra_name": {
+                                        "data_type": "string",
+                                        "title": "infra_name",
+                                        "description": "The name of infrastructure to deploy the application to",
+                                        "required": []
+                                    },
+                                    "status": {
+                                        "data_type": "integer",
+                                        "title": "status",
+                                        "description": "Status of deployment",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "app_name",
+                                    "app_version",
+                                    "infra_name",
+                                    "status"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {},
+                                "required": []
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": []
+        },
+        {
+            "agent_id": "application_agent",
+            "agent_name": "application_agent",
+            "agent_instruction": "You are an agent that deploys the application to infrastructure. You will also have ability to register and delete any applications.",
+            "tools": [
+                {
+                    "tool_name": "CodeDeployment",
+                    "name": "CodeDeployment",
+                    "description": "Tools for software application deployment",
+                    "actions": [
+                        {
+                            "name": "registerapplication",
+                            "description": "Register software application.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "name": {
+                                        "data_type": "string",
+                                        "title": "name",
+                                        "description": "Name of the software application",
+                                        "required": []
+                                    },
+                                    "version": {
+                                        "data_type": "string",
+                                        "title": "version",
+                                        "description": "Version ID of the application",
+                                        "required": []
+                                    },
+                                    "dependencies": {
+                                        "data_type": "array",
+                                        "title": "dependencies",
+                                        "description": "List of dependencies needed to run application",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {},
+                                            "required": []
+                                        }
+                                    },
+                                    "code_files": {
+                                        "data_type": "array",
+                                        "title": "code_files",
+                                        "description": "Code files for the application",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "object",
+                                            "properties": {},
+                                            "required": []
+                                        }
+                                    },
+                                    "build_instructions": {
+                                        "data_type": "array",
+                                        "title": "build_instructions",
+                                        "description": "List of instructions or commands required to build the application before deployment",
+                                        "required": [],
+                                        "items": {
+                                            "data_type": "string",
+                                            "required": []
+                                        }
+                                    },
+                                    "start_command": {
+                                        "data_type": "string",
+                                        "title": "start_command",
+                                        "description": "Command to start application after it has been deployed",
+                                        "required": []
+                                    },
+                                    "port": {
+                                        "data_type": "integer",
+                                        "title": "port",
+                                        "description": "The port on which the application will be running",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "version",
+                                    "code_files"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "status": {
+                                        "data_type": "string",
+                                        "title": "status",
+                                        "description": "Status of application registration",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "registerinfrastructure",
+                            "description": "Register infrastructure before deploying software.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "name": {
+                                        "data_type": "string",
+                                        "title": "name",
+                                        "description": "Name of the infrastructure",
+                                        "required": []
+                                    },
+                                    "type": {
+                                        "data_type": "string",
+                                        "title": "type",
+                                        "description": "Type of infrastructure",
+                                        "required": []
+                                    },
+                                    "config": {
+                                        "data_type": "object",
+                                        "title": "config",
+                                        "description": "Config for infrastructure",
+                                        "properties": {
+                                            "num_nodes": {
+                                                "data_type": "integer",
+                                                "title": "num_nodes",
+                                                "description": "Number of nodes",
+                                                "required": []
+                                            },
+                                            "node_size": {
+                                                "data_type": "string",
+                                                "title": "node_size",
+                                                "description": "Size of node",
+                                                "required": []
+                                            },
+                                            "region": {
+                                                "data_type": "string",
+                                                "title": "region",
+                                                "description": "Region of node",
+                                                "required": []
+                                            }
+                                        },
+                                        "required": [
+                                            "num_nodes",
+                                            "node_size",
+                                            "region"
+                                        ]
+                                    },
+                                    "provider": {
+                                        "data_type": "string",
+                                        "title": "provider",
+                                        "description": "Cloud provider or platform",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "type",
+                                    "config"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "status": {
+                                        "data_type": "integer",
+                                        "title": "status",
+                                        "description": "Status of registration",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "deleteinfrastructure",
+                            "description": "Delete infrastructure.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "name": {
+                                        "data_type": "string",
+                                        "title": "name",
+                                        "description": "Name of the hardware infrastructure",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {
+                                    "status": {
+                                        "data_type": "integer",
+                                        "title": "status",
+                                        "description": "Status of delete request",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "status"
+                                ]
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        },
+                        {
+                            "name": "deployapplication",
+                            "description": "Deploy application on specified hardware.",
+                            "input_schema": {
+                                "data_type": "object",
+                                "properties": {
+                                    "app_name": {
+                                        "data_type": "string",
+                                        "title": "app_name",
+                                        "description": "Name of application to deploy",
+                                        "required": []
+                                    },
+                                    "app_version": {
+                                        "data_type": "string",
+                                        "title": "app_version",
+                                        "description": "Version of application to deploy",
+                                        "required": []
+                                    },
+                                    "infra_name": {
+                                        "data_type": "string",
+                                        "title": "infra_name",
+                                        "description": "The name of infrastructure to deploy the application to",
+                                        "required": []
+                                    },
+                                    "status": {
+                                        "data_type": "integer",
+                                        "title": "status",
+                                        "description": "Status of deployment",
+                                        "required": []
+                                    }
+                                },
+                                "required": [
+                                    "app_name",
+                                    "app_version",
+                                    "infra_name",
+                                    "status"
+                                ]
+                            },
+                            "output_schema": {
+                                "data_type": "object",
+                                "title": "201",
+                                "description": "Success response",
+                                "properties": {},
+                                "required": []
+                            },
+                            "requires_confirmation": false,
+                            "meta": {}
+                        }
+                    ],
+                    "tool_type": "Module",
+                    "meta": {}
+                }
+            ],
+            "reachable_agents": []
+        }
+    ],
+    "primary_agent_id": "software_agent",
+    "human_id": "User"
+}
