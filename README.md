@@ -1,4 +1,4 @@
-## Meta-agent LLM Scenario Benchmarking
+## Multi-agent Collaboration Scenario Benchmarking
 
 ### Data
 
