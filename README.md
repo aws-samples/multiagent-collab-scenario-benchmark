@@ -1,5 +1,7 @@
 ## Multi-agent Collaboration Scenario Benchmarking
 
+This repository contains benchmarking material from the AWS Bedrock Agents multi-agents collaboration technical report: "Towards Effective GenAI Multi-Agent Collaboration: Design and Evaluation for Enterprise Applications". The technical report is here on arXiv: https://arxiv.org/abs/2412.05449.
+
 ### Data
 
 Benchmarking data is in the `datasets` directory where there are 30 hypothetical scenarios for three domains: travel planning, mortgage financing, and software development. 
@@ -71,3 +73,23 @@ See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more inform
 This library is licensed under the MIT-0 License. See the LICENSE file.
 
 The dataset is licensed under the CC-BY-4.0 license.
+
+## Citation
+
+If you have found our work useful, please cite the technical report:
+
+```
+@misc{shu2024effectivegenaimultiagentcollaboration,
+      title={Towards Effective GenAI Multi-Agent Collaboration: Design and Evaluation for Enterprise Applications}, 
+      author={Raphael Shu and Nilaksh Das and Michelle Yuan and Monica Sunkara and Yi Zhang},
+      year={2024},
+      eprint={2412.05449},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2412.05449}, 
+}
+```
+## Core Contributors
+* [Raphael Shu](https://github.com/zomux)
+* [Nilaksh Das](https://github.com/nilakshdas)
+* [Michelle Yuan](https://github.com/forest-snow)
